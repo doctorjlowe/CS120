@@ -139,6 +139,76 @@ void addVideo(vector<Video*> &videos) {
 	videos.push_back(newAddVid); // if not, use this
 } // End addVideo
 
+void editVideo(Video* &vid, string field) {
+	string entry;
+	unsigned int n;
+	vector<Person> addPeople;
+	unsigned short m, d, y;
+	if (field == "name") {
+		cout << "Enter new name: ";
+		getline(cin, entry);
+		vid->setName(entry);
+	}
+	else if (field == "audience") {
+		cout << "Enter new audience: ";
+		getline(cin, entry);
+		vid->setAudience(entry);
+	}
+	else if (field == "location") {
+		cout << "Enter a new location: ";
+		getline(cin, entry);
+		vid->setLocation(entry);
+	}
+	else if (field == "directors") {
+		cout << "Enter number of directors: ";
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cout << "Enter director: ";
+			getline(cin, entry);
+			addPeople.push_back(entry);
+		}
+		vid->setDirectors(addPeople);
+	}
+	else if (field == "actors") {
+		cout << "Enter number of actors: ";
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cout << "Enter actor: ";
+			getline(cin, entry);
+			addPeople.push_back(entry);
+		}
+		vid->setActors(addPeople);
+	}
+	else if (field == "released") {
+		cout << "Enter new Month: ";
+		cin >> m;
+		cout << "Enter new Day: ";
+		cin >> d;
+		cout << "Enter new Year: ";
+		cin >> y;
+		Date newDate(y, m, d);
+		vid->setReleased(newDate);
+	}
+	else if (field == "viewed") {
+		cout << "Enter new Month: ";
+		cin >> m;
+		cout << "Enter new Day: ";
+		cin >> d;
+		cout << "Enter new Year: ";
+		cin >> y;
+		Date newDate(y, m, d);
+		vid->setViewed(newDate);
+	}
+	else if (field == "runtime") {
+		cout << "Enter new runtime: ";
+		cin >> n;
+		vid->setRuntimeMinutes(n);
+	}
+	else {
+		cout << "Error: this is not a valid field chioce." << endl;
+	}
+}
+
 // removes any matched items from the videos vector
 void remove(vector<Video*> &videos, vector<int> matches) {
 	for (int i = 0; i < matches.size(); ++i) {
@@ -244,6 +314,7 @@ int main(){
 		cout << "search = search document for a given entry" << endl;
 		cout << "description search = search Television episode descriptions" << endl;
 		cout << "add = add a new entry to list" << endl;
+		cout << "edit = edit an existing entry" << endl;
 		cout << "remove = remove an item from the list" << endl;
 		cout << "print = print entire list of Videos" << endl;
 		cout << "quit = quit program" << endl;
@@ -254,7 +325,6 @@ int main(){
 	}
 	else if (comm == "description search") {
 		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
-		cin.ignore();
 		getline(cin, searchEntry);
 		for (i = 0; i < videos.size(); ++i) {
 			if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
@@ -263,6 +333,28 @@ int main(){
 			}
 		}
 		// TODO: else, print error message
+	}
+	else if (comm == "edit") {
+		cout << "Enter something to search (be specific): ";
+		getline(cin, searchEntry);
+		matches = searchVideos(videos, searchEntry);
+		cout << "Do you want to change this (y/n)? " << endl;
+		videos.at(matches.at(0))->displayAll();
+		cout << endl;
+		cin >> templine;
+		if (templine == "n")
+			continue; // FIXME: goes to top?
+		else if (templine == "y") {
+			// do nothing
+		}
+		else {
+			cout << "not a valid chioce" << endl;
+			continue;
+		}
+		cout << "Choose a field to edit: ";
+		// TODO: print field names
+		cin >> templine;
+		editVideo(videos.at(matches.at(0)), templine); // call function to edit matched index
 	}
 	else if (comm == "help search") {
 		cout << "Fields and format of entry while searching:" << endl;
@@ -274,6 +366,25 @@ int main(){
 		cout << "actor - ex. Cruise or Tom Cruise" << endl;
 		cout << "runtime minutes - 135 or 60" << endl;
 	}
+	else if (comm == "loan") {
+		cout << "Enter something to search (be specific): ";
+		getline(cin, searchEntry);
+		matches = searchVideos(videos, searchEntry);
+		cout << "Do you want to loan this (y/n)? " << endl;
+		videos.at(matches.at(0))->displayAll();
+		cout << endl;
+		cin >> templine;
+		if (templine == "n")
+			continue; // FIXME: goes to top?
+		else if (templine == "y") {
+			// do nothing
+		}
+		else {
+			cout << "not a valid chioce" << endl;
+			continue;
+		}
+		editVideo(videos.at(matches.at(0)), "location");
+	}
 	else if (comm == "print") { // print videos
 		display(videos); // FIXME: working?
 	}
@@ -282,7 +393,6 @@ int main(){
 	}
 	else if (comm == "remove") {
 		cout << "Enter something to remove: ";
-		cin.ignore();
 		getline(cin, searchEntry);
 		matches = searchVideos(videos, searchEntry);
 		if (matches.size() != 0) { // if items were matched, then do the following
@@ -295,7 +405,6 @@ int main(){
 	}
 	else if (comm == "search") { // search vectors for entries
 		cout << "Enter something to search: ";
-		cin.ignore();
 		getline(cin, searchEntry);
 		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
 	}
