@@ -1,9 +1,11 @@
 /****************************************************************
 File:             project3.cpp
 Description:      database for a movie library
+
 Author:           David && Evan
 Class:            CSCI 120
 Date:             2015 May 13
+
 We hereby certify that this program is entirely our own work.
 *****************************************************************/
 
@@ -27,8 +29,7 @@ void display(vector<Video*> &videos) { // displays all objects in vector
 	for (int i = 0; i < videos.size(); ++i) { videos.at(i)->display(); }
 }	// display
 
-vector<int> searchVideos(vector<Video*> &videos, string target) {
-	vector<int> returnVector; // remembers all indexes of matched search targets
+void searchVideos(vector<Video*> &videos, string target) {
 	bool found = false;
 	int i = 0;
 	cout << "Searching..." << endl;
@@ -36,70 +37,16 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
 		// checks every field
 		if (videos.at(i)->searchTarget(target)) {
 			found = true;
-			returnVector.push_back(i);
 			videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
 		}	// if
 	}	// for
 	// if no matches are found, print message
 	if (!found)
 		cout << "No matches found for your entry." << endl;
-	return returnVector;
 } // print any found matches
 
-void addVideo(vector<Video*> &videos) {
-	Video* newAddVid;
-	string templine;
-	string templine2;
-	unsigned int tempInt = 0;
-	unsigned int tempInt2 = 0;
+void Remove(vector<Video*> &videos) {
 
-	cout << "Which type to add?(Movie, Television, Computer) ";
-	cin >> templine;
-	if (templine == "Movie") {
-		cout << "Which instalment in a series is it? ";
-		cin >> tempInt;
-		newAddVid = new Movie(tempInt);
-	}
-	else if (templine == "Television") { // season, episode, episodeDesc
-		cout << "How many seasons are in it? ";
-		cin >> tempInt;
-		cout << "How many episodes are in each season? ";
-		cin >> tempInt2;
-		newAddVid = new Television(tempInt, tempInt2);
-	}
-	else if (templine == "Computer") {
-		cout << "What is the homepage (Enter nothing to skip)? ";
-		cin >> templine;
-		cout << "What is the source of the video (domain)? ";
-		cin >> templine2;
-		newAddVid = new Computer(templine, templine2);
-	}
-	else {
-		cout << "Not a valid type.";
-		return; // TODO: should reprint first message
-	}
-	// end ifs
-	cout << "What is the Name of the video? ";
-	cin >> templine;
-	newAddVid->setName(templine);
-	cout << "What is the audience of the video? ";
-	cin >> templine;
-	newAddVid->setAudience(templine);
-	cout << "What is the location of the video? ";
-	cin >> templine;
-	newAddVid->setLocation(templine);
-	cout << "Enter the director(s): ";
-	// TODO: how to add directors
-	cout << "Enter the actor(s): ";
-	// TODO: how to add actors
-	// TODO: released and viewed and runtime
-}
-
-// removes any matched items from the videos vector
-void remove(vector<Video*> &videos, vector<int> matches) {
-	for (int i = 0; i < matches.size(); ++i) {
-		videos.erase(videos.begin() + matches.at(i)); // should erase any matched items from the vector
-	}
 }
 
 int main(){
@@ -109,16 +56,17 @@ int main(){
 	// Television newTelevision;
 	vector<Person> persons;
 	vector<Video*> videos;
-	vector<int> matches;
+	string searchEntry;
 	string person_file_name = "Persons.dat";
 	string video_file_name = "Videos.dat";
-	string movie_delimiter = "<movie>";
-	string name_delimiter = "<name>";
+	string movie_start = "<movie>";
+	string name_start = "<name>";
+	string audience_start = "<audience>";
+	string location_start = "<location>";
+	string director_start = "<director>";
 	string templine;
 	string comm;
-	string searchEntry;
 	unsigned int stringPos = 0;
-	unsigned int tempInt = 0;
    vector<string> temp(5);
 	int i = 0;
    
@@ -175,15 +123,21 @@ int main(){
       getline(videoReader, templine);
       if ( videoReader.eof() ) break;
       
-      while ((templine.find(movie_delimiter)) < std::string::npos) {
-    		templine.erase(0, stringPos + movie_delimiter.length());
+      while ((templine.find(movie_start)) < std::string::npos) {
+    		templine.erase(0, stringPos + movie_start.length());
     		cout << "Movie" << endl;
 		}	// while movie
 		
-      while ((templine.find(name_delimiter)) < std::string::npos) {
-    		templine.erase(0, stringPos + name_delimiter.length() + 1);
+      while ((templine.find(name_start)) < std::string::npos) {
+      	if (templine[0] == '\t') { templine.erase(0, 1); }
+    		templine.erase(0, stringPos + name_start.length());
     		cout << templine << endl;
-		}	// while 
+		}	// while
+		
+      while ((templine.find(audience_start)) < std::string::npos) {
+    		templine.erase(0, stringPos + audience_start.length());
+    		cout << templine << endl;
+		}	// while
 		
    }  // while !videoReader.eof()
    
@@ -204,7 +158,7 @@ int main(){
 		cout << "save = save changes to list of Videos to external file" << endl;
 	}
 	else if (comm == "add") { // add new entry
-		addVideo(videos);
+		// TODO add to videos
 	}
 	else if (comm == "print") { // print videos
 		display(videos); // FIXME: working?
@@ -213,14 +167,7 @@ int main(){
 		break; // quit program
 	}
 	else if (comm == "remove") {
-		cout << "Enter something to remove: ";
-		cin.ignore();
-		getline(cin, searchEntry);
-		matches = searchVideos(videos, searchEntry);
-		if (matches.size() != 0) { // if items were matched, then do the following
-			remove(videos, matches);
-			cout << "Items removed." << endl;
-		}
+
 	}
 	else if (comm == "save") {
 		// TODO: save list updates
@@ -232,26 +179,12 @@ int main(){
 		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
 	}
 	else if (comm == "search description") {
-		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
-		cin.ignore();
-		getline(cin, searchEntry);
-		for (i = 0; i < videos.size(); ++i) {
-			if () {// TODO: if type is Television, then do the following
-				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
-					videos.at(i)->displayAll();
-			}
-		}
-		// TODO: else, print error message
+		// TODO: search Television items by episode description
 	}
 	else if (comm == "search help") {
 		cout << "Fields and format of entry while searching:" << endl;
-		cout << "name - Movie Title Case Sensative" << endl;
-		cout << "date - mm/dd/yy (leading zeros required)" << endl;
-		cout << "audience - G or PG or PG-13 or R" << endl;
-		cout << "location - ex. Bill's House or Garage" << endl;
-		cout << "director - ex. Jackson or Peter Jackson" << endl;
-		cout << "actor - ex. Cruise or Tom Cruise" << endl;
-		cout << "runtime minutes - 135 or 60" << endl;
+		cout << "name - ";
+		cout << "date - mm/dd/yy (leading zeros required)";
 	}
 	else
 		cout << "Input not recognized.\n";
@@ -263,3 +196,4 @@ int main(){
    #endif
 
    return 0;
+}	// main()
