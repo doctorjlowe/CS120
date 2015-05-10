@@ -33,7 +33,8 @@ namespace Vids
 			return str.substr(0, width) + "...";
 		return str;
 	}	// truncate
-			// changes a Date into a string, with useful formatting
+
+	// changes a Date into a string, with useful formatting
 	string Video::dateToString(Date &given) {
 		string monthStr;
 		string dayStr;
@@ -52,4 +53,15 @@ namespace Vids
 			yearStr = to_string(given.getYear());
 		return monthStr + "/" + dayStr + "/" + yearStr;
 	}
+
+	/*
+	Date Video::dateToString(string &given) {
+		Date newDate;
+		unsigned short year, month, day;
+		if (given.size() != 8) {
+			cout << "Error: date form" << endl;
+			return newDate;
+		}
+	} // may not function, or not be needed
+	*/
 }

@@ -52,6 +52,14 @@ namespace Vids
 			string getLocation() const { return location; }
 			Date getReleased() const { return released; }
 			Date getViewed() const { return viewed; }
+			void setRuntimeMinutes(unsigned int in)  { runtimeMinutes = in; } // returns in string, more utility this way
+			void setName(string in)  { name = in; }
+			void setAudience(string in)  { audience = in; }
+			void setLocation(string in)  { location = in; }
+			void setDirectors(vector<Person> dir) { directors = dir; }
+			void setActors(vector<Person> act) { actors = act; }
+			void setReleased(Date in)  { released = in; }
+			void setViewed(Date in)  { viewed = in; }
 			string Truncate(string str, size_t width); // shortens output
 			string dateToString(Date &given);
 			bool searchPeople(string target) { // will search directors and actors for matching item

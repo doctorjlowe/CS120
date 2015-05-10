@@ -20,11 +20,13 @@ using namespace Vids;
 Television::Television() {
 	season = 0;
 	episode = 0;
+	episodeDesc;
 }	// default constructor
 
 Television::Television(unsigned int season, unsigned int episode) {
 	this->season = season;
 	this->episode = episode;
+	episodeDesc.resize(season * episode);
 }	// parameterized constructor
 
 void Television::display() { // order: name, audience, 1st director, 1st actor, runtime
@@ -37,6 +39,7 @@ void Television::display() { // order: name, audience, 1st director, 1st actor, 
 	cout << left << fixed << setw(12) << Truncate(shortActors, 12);
 	cout << left << fixed << setw(4) << runtimeMinutes;
 	cout << left << fixed << setw(3) << season;
+	cout << endl;
 }// displays information for all objects of Video type
 
 void Television::displayAll() {
@@ -83,4 +86,13 @@ bool Television::searchTarget(string target) {
 	}
 	else
 		return false;
+}
+
+bool Television::searchDesc(string target) { // searches descriptions of episodes
+	for (int i = 0; i < episodeDesc.size(); ++i) {
+		if (episodeDesc.at(i).find(target) != string::npos) {
+			return true;
+		}
+	}
+	return false; // if not found matching descriptions, return false
 }

@@ -24,6 +24,7 @@ public:
 	unsigned int getEpisode() const { return episode; }
 	bool searchTarget(string target); // TODO: used to search additonal fields in derived classes
 	// prints description of specific episode; must pass in index of season and episode
+	bool searchDesc(string target); // searches descriptions of episodes
 	void printDesc(int s, int e) { cout << episodeDesc.at(s * episode + e) << endl; }
 	void display();
 	void displayAll();
