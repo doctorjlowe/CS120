@@ -13,6 +13,7 @@ We hereby certify that this program is entirely our own work.
 #define VIDEO_H
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -20,6 +21,11 @@ We hereby certify that this program is entirely our own work.
 #include "Date.h"
 
 using namespace std;
+template < typename T > string to_string( const T& n ) {
+   ostringstream stm ;
+   stm << n ;
+   return stm.str() ;
+}	// redefine to_string to avoid GCC bug
 
 enum kind {MOVIE, TELEVISION, COMPUTER};
 // 'MOVIE' = standalone film of any length, whether it's part of a franchise or not
@@ -40,7 +46,7 @@ namespace Vids
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object
 			bool searchTarget(string target) { return 0; } // TODO: used to search additonal fields in derived classes
-			string getRuntimeMinutes() const { string s = to_string(runtimeMinutes); return s; } // returns in string, more utility this way
+			string getRuntimeMinutes() const { return to_string(runtimeMinutes); } // returns in string, more utility this way
 			string getName() const { return name; }
 			string getAudience() const { return audience; }
 			string getLocation() const { return location; }
