@@ -34,6 +34,7 @@ public:
 		cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
 		cout << left << fixed << setw(12) << Truncate(shortActors, 12);
 		cout << left << fixed << setw(4) << runtimeMinutes;
+		cout << endl;
 
 	}// displays information for all objects of Video type
 	void displayAll() {

@@ -50,15 +50,18 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
 
 void addVideo(vector<Video*> &videos) {
 	Video* newAddVid;
+	vector<Person> addDirectors;
+	vector<Person> addActors;
 	string templine;
 	string templine2;
 	unsigned int tempInt = 0;
 	unsigned int tempInt2 = 0;
+	unsigned int tempInt3 = 0;
 
 	cout << "Which type to add?(Movie, Television, Computer) ";
 	cin >> templine;
 	if (templine == "Movie") {
-		cout << "Which instalment in a series is it? ";
+		cout << "Which installment in a series is it? ";
 		cin >> tempInt;
 		newAddVid = new Movie(tempInt);
 	}
@@ -81,21 +84,60 @@ void addVideo(vector<Video*> &videos) {
 		return; // TODO: should reprint first message
 	}
 	// end ifs
+
+	// name
 	cout << "What is the Name of the video? ";
-	cin >> templine;
+	cin.ignore();
+	getline(cin, templine);
 	newAddVid->setName(templine);
+
+	// audience
 	cout << "What is the audience of the video? ";
 	cin >> templine;
 	newAddVid->setAudience(templine);
+
+	// location
 	cout << "What is the location of the video? ";
-	cin >> templine;
+	cin.ignore();
+	getline(cin, templine);
 	newAddVid->setLocation(templine);
-	cout << "Enter the director(s): ";
-	// TODO: how to add directors
-	cout << "Enter the actor(s): ";
-	// TODO: how to add actors
-	// TODO: released and viewed and runtime
-}
+
+	// release date
+	cout << "What was its release date?" << endl << "Month: ";
+	cin >> tempInt;
+	cout << "Day: ";
+	cin >> tempInt2;
+	cout << "Year: ";
+	cin >> tempInt3;
+	Date relDate(tempInt3, tempInt, tempInt2); // create new Date obj to fill release date
+	newAddVid->setReleased(relDate);
+
+	// viewed date
+	cout << "Which date did you watch it?" << endl << "Month: ";
+	cin >> tempInt;
+	cout << "Day: ";
+	cin >> tempInt2;
+	cout << "Year: ";
+	cin >> tempInt3;
+	Date watDate(tempInt3, tempInt, tempInt2); // create new Date obj to fill release date
+	newAddVid->setReleased(watDate);
+
+	// directors
+	cout << "Enter the director(s): "; // TODO: add multiple
+	cin.ignore();
+	getline(cin, templine);
+	addDirectors.push_back(templine); // adds a director to the vector to be added
+	newAddVid->setDirectors(addDirectors); // sets directors to vector
+
+	// actors
+	cout << "Enter the actor(s): "; // TODO: add multiple
+	cin.ignore();
+	getline(cin, templine);
+	addActors.push_back(templine);
+	newAddVid->setActors(addActors);
+	// TODO: alphabetize vector entry?
+	videos.push_back(newAddVid); // if not, use this
+} // End addVideo
 
 // removes any matched items from the videos vector
 void remove(vector<Video*> &videos, vector<int> matches) {
@@ -150,6 +192,7 @@ int main(){
       
       if (temp.at(0) == "Person") {
       	Person newPerson(temp.at(1), temp.at(3), temp.at(2), temp.at(4));
+		persons.push_back(newPerson);
       	/* FIXME: following is debugging output
       	cout << "First: " << newPerson.getFirstName() << endl;
       	cout << "Middle: " << newPerson.getMiddleName() << endl;
@@ -193,12 +236,13 @@ int main(){
 
 	do {
 	cout << "Enter a command (help = command list): ";
-	cin >> comm; // choice of command
+	getline(cin, comm); // choice of command
 	
 	if (comm == "help") { // help/display command list
 		cout << "COMMANDS:" << endl;
-		cout << "search help = gives format for search entries" << endl;
+		cout << "help search = gives format for search entries" << endl;
 		cout << "search = search document for a given entry" << endl;
+		cout << "description search = search Television episode descriptions" << endl;
 		cout << "add = add a new entry to list" << endl;
 		cout << "remove = remove an item from the list" << endl;
 		cout << "print = print entire list of Videos" << endl;
@@ -207,6 +251,28 @@ int main(){
 	}
 	else if (comm == "add") { // add new entry
 		addVideo(videos);
+	}
+	else if (comm == "description search") {
+		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
+		cin.ignore();
+		getline(cin, searchEntry);
+		for (i = 0; i < videos.size(); ++i) {
+			if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
+				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
+					videos.at(i)->displayAll();
+			}
+		}
+		// TODO: else, print error message
+	}
+	else if (comm == "help search") {
+		cout << "Fields and format of entry while searching:" << endl;
+		cout << "name - Movie Title Case Sensative" << endl;
+		cout << "date - mm/dd/yy (leading zeros required)" << endl;
+		cout << "audience - G or PG or PG-13 or R" << endl;
+		cout << "location - ex. Bill's House or Garage" << endl;
+		cout << "director - ex. Jackson or Peter Jackson" << endl;
+		cout << "actor - ex. Cruise or Tom Cruise" << endl;
+		cout << "runtime minutes - 135 or 60" << endl;
 	}
 	else if (comm == "print") { // print videos
 		display(videos); // FIXME: working?
@@ -232,28 +298,6 @@ int main(){
 		cin.ignore();
 		getline(cin, searchEntry);
 		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
-	}
-	else if (comm == "search description") {
-		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
-		cin.ignore();
-		getline(cin, searchEntry);
-		for (i = 0; i < videos.size(); ++i) {
-			if () {// TODO: if type is Television, then do the following
-				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
-					videos.at(i)->displayAll();
-			}
-		}
-		// TODO: else, print error message
-	}
-	else if (comm == "search help") {
-		cout << "Fields and format of entry while searching:" << endl;
-		cout << "name - Movie Title Case Sensative" << endl;
-		cout << "date - mm/dd/yy (leading zeros required)" << endl;
-		cout << "audience - G or PG or PG-13 or R" << endl;
-		cout << "location - ex. Bill's House or Garage" << endl;
-		cout << "director - ex. Jackson or Peter Jackson" << endl;
-		cout << "actor - ex. Cruise or Tom Cruise" << endl;
-		cout << "runtime minutes - 135 or 60" << endl;
 	}
 	else
 		cout << "Input not recognized.\n";

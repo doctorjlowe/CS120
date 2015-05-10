@@ -51,6 +51,7 @@ namespace Vids
 			void setAudience(string in)  { audience = in; }
 			void setLocation(string in)  { location = in; }
 			void setDirectors(vector<Person> dir) { directors = dir; }
+			void setActors(vector<Person> act) { actors = act; }
 			void setReleased(Date in)  { released = in; }
 			void setViewed(Date in)  { viewed = in; }
 			string Truncate(string str, size_t width); // shortens output

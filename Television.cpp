@@ -39,6 +39,7 @@ void Television::display() { // order: name, audience, 1st director, 1st actor, 
 	cout << left << fixed << setw(12) << Truncate(shortActors, 12);
 	cout << left << fixed << setw(4) << runtimeMinutes;
 	cout << left << fixed << setw(3) << season;
+	cout << endl;
 }// displays information for all objects of Video type
 
 void Television::displayAll() {
