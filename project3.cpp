@@ -334,7 +334,7 @@ int main(){
 		}
 		// TODO: else, print error message
 	}
-	else if (comm == "edit") {
+	else if (comm == "edit" || comm == "loan") {
 		cout << "Enter something to search (be specific): ";
 		getline(cin, searchEntry);
 		matches = searchVideos(videos, searchEntry);
@@ -354,7 +354,11 @@ int main(){
 		cout << "Choose a field to edit: ";
 		// TODO: print field names
 		cin >> templine;
-		editVideo(videos.at(matches.at(0)), templine); // call function to edit matched index
+		if (comm == "edit")
+			editVideo(videos.at(matches.at(0)), templine); // call function to edit matched index
+		else if (comm == "loan")
+			editVideo(videos.at(matches.at(0)), "location");
+		cout << "Update sucessful." << endl; // FIXME: working?
 	}
 	else if (comm == "help search") {
 		cout << "Fields and format of entry while searching:" << endl;
@@ -365,25 +369,6 @@ int main(){
 		cout << "director - ex. Jackson or Peter Jackson" << endl;
 		cout << "actor - ex. Cruise or Tom Cruise" << endl;
 		cout << "runtime minutes - 135 or 60" << endl;
-	}
-	else if (comm == "loan") {
-		cout << "Enter something to search (be specific): ";
-		getline(cin, searchEntry);
-		matches = searchVideos(videos, searchEntry);
-		cout << "Do you want to loan this (y/n)? " << endl;
-		videos.at(matches.at(0))->displayAll();
-		cout << endl;
-		cin >> templine;
-		if (templine == "n")
-			continue; // FIXME: goes to top?
-		else if (templine == "y") {
-			// do nothing
-		}
-		else {
-			cout << "not a valid chioce" << endl;
-			continue;
-		}
-		editVideo(videos.at(matches.at(0)), "location");
 	}
 	else if (comm == "print") { // print videos
 		display(videos); // FIXME: working?
