@@ -24,6 +24,8 @@ public:
 	Computer(string homepage, string source);
 	string getSource() const { return source; }
 	string getHomepage() const { return homepage; }
+	void setSource(string s) { source = s; }
+	void setHomepage(string h) { homepage = h; }
 	bool searchTarget(string target); // TODO: used to search additonal fields in derived classes
 
 	void display();

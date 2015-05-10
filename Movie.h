@@ -77,6 +77,7 @@ public:
 		else
 			return false;
 	}
+	void setSeriesNum(unsigned int sn) { seriesNum = sn; }
 private:
 	unsigned int seriesNum;
 };

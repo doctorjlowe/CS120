@@ -48,6 +48,55 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
 	return returnVector;
 } // print any found matches
 
+void addVideo(vector<Video*> &videos) {
+	Video* newAddVid;
+	string templine;
+	string templine2;
+	unsigned int tempInt = 0;
+	unsigned int tempInt2 = 0;
+
+	cout << "Which type to add?(Movie, Television, Computer) ";
+	cin >> templine;
+	if (templine == "Movie") {
+		cout << "Which instalment in a series is it? ";
+		cin >> tempInt;
+		newAddVid = new Movie(tempInt);
+	}
+	else if (templine == "Television") { // season, episode, episodeDesc
+		cout << "How many seasons are in it? ";
+		cin >> tempInt;
+		cout << "How many episodes are in each season? ";
+		cin >> tempInt2;
+		newAddVid = new Television(tempInt, tempInt2);
+	}
+	else if (templine == "Computer") {
+		cout << "What is the homepage (Enter nothing to skip)? ";
+		cin >> templine;
+		cout << "What is the source of the video (domain)? ";
+		cin >> templine2;
+		newAddVid = new Computer(templine, templine2);
+	}
+	else {
+		cout << "Not a valid type.";
+		return; // TODO: should reprint first message
+	}
+	// end ifs
+	cout << "What is the Name of the video? ";
+	cin >> templine;
+	newAddVid->setName(templine);
+	cout << "What is the audience of the video? ";
+	cin >> templine;
+	newAddVid->setAudience(templine);
+	cout << "What is the location of the video? ";
+	cin >> templine;
+	newAddVid->setLocation(templine);
+	cout << "Enter the director(s): ";
+	// TODO: how to add directors
+	cout << "Enter the actor(s): ";
+	// TODO: how to add actors
+	// TODO: released and viewed and runtime
+}
+
 // removes any matched items from the videos vector
 void remove(vector<Video*> &videos, vector<int> matches) {
 	for (int i = 0; i < matches.size(); ++i) {
@@ -69,9 +118,10 @@ int main(){
 	string name_delimiter = "<name>";
 	string templine;
 	string comm;
-	unsigned int stringPos = 0;
-   vector<string> temp(5);
 	string searchEntry;
+	unsigned int stringPos = 0;
+	unsigned int tempInt = 0;
+   vector<string> temp(5);
 	int i = 0;
    
    //cout << "What name should the File have?" << std::endl;
@@ -156,7 +206,7 @@ int main(){
 		cout << "save = save changes to list of Videos to external file" << endl;
 	}
 	else if (comm == "add") { // add new entry
-		// TODO add to videos
+		addVideo(videos);
 	}
 	else if (comm == "print") { // print videos
 		display(videos); // FIXME: working?
@@ -184,12 +234,26 @@ int main(){
 		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
 	}
 	else if (comm == "search description") {
-		// TODO: search Television items by episode description
+		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
+		cin.ignore();
+		getline(cin, searchEntry);
+		for (i = 0; i < videos.size(); ++i) {
+			if () {// TODO: if type is Television, then do the following
+				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
+					videos.at(i)->displayAll();
+			}
+		}
+		// TODO: else, print error message
 	}
 	else if (comm == "search help") {
 		cout << "Fields and format of entry while searching:" << endl;
-		cout << "name - ";
-		cout << "date - mm/dd/yy (leading zeros required)";
+		cout << "name - Movie Title Case Sensative" << endl;
+		cout << "date - mm/dd/yy (leading zeros required)" << endl;
+		cout << "audience - G or PG or PG-13 or R" << endl;
+		cout << "location - ex. Bill's House or Garage" << endl;
+		cout << "director - ex. Jackson or Peter Jackson" << endl;
+		cout << "actor - ex. Cruise or Tom Cruise" << endl;
+		cout << "runtime minutes - 135 or 60" << endl;
 	}
 	else
 		cout << "Input not recognized.\n";
