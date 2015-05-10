@@ -58,8 +58,6 @@ void addVideo(vector<Video*> &videos) {
 	unsigned int tempInt2 = 0;
 	unsigned int tempInt3 = 0;
 
-<<<<<<< HEAD
-=======
 	cout << "Which type to add?(Movie, Television, Computer) ";
 	cin >> templine;
 	if (templine == "Movie") {
@@ -218,7 +216,6 @@ void remove(vector<Video*> &videos, vector<int> matches) {
 	}
 }
 
->>>>>>> 7c99ce3a0cedd1bdeec3d02b7b49ba98a3279a82
 int main(){
 
 	Person newPerson;
