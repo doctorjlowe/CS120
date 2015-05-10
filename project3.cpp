@@ -315,6 +315,7 @@ int main(){
 		cout << "description search = search Television episode descriptions" << endl;
 		cout << "add = add a new entry to list" << endl;
 		cout << "edit = edit an existing entry" << endl;
+		cout << "loan = edit the location of an entry" << endl;
 		cout << "remove = remove an item from the list" << endl;
 		cout << "print = print entire list of Videos" << endl;
 		cout << "quit = quit program" << endl;
