@@ -62,7 +62,7 @@ public:
 		cout << "Date Viewed: " << viewed;
 	}
 
-	bool Movie::searchTarget(string target) {
+	bool searchTarget(string target) {
 		string ser = to_string(seriesNum);
 		if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
 			|| name.find(target) != string::npos // search name
