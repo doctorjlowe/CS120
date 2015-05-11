@@ -231,10 +231,14 @@ int main(){
 	string audience_start = "<audience>";
 	string location_start = "<location>";
 	string director_start = "<director>";
+	string name_stop = "</name>";
+	string audience_stop = "</audience>";
+	string location_stop = "</location>";
+	string director_stop = "</director>";
 	string templine;
 	string comm;
 	string searchEntry;
-	unsigned int stringPos = 0;
+	size_t stringPos = 0;
 	unsigned int tempInt = 0;
    vector<string> temp(5);
 	int i = 0;
@@ -300,16 +304,39 @@ int main(){
 		
       while ((templine.find(name_start)) < std::string::npos) {
       	if (templine[0] == '\t') templine.erase(0, 1);
-    		templine.erase(0, stringPos + name_start.length());
-    		//if ((templine.find(name_start)) < std::string::npos) templine.erase(0, stringPos + name_start.length());
+    		templine.erase(0, name_start.length());
+    		stringPos = templine.find(name_stop);
+    		if (stringPos < std::string::npos) {
+    			templine.erase(stringPos, stringPos + name_stop.length()); }
     		cout << templine << endl;
-		}	// while
+		}	// while name
 		
       while ((templine.find(audience_start)) < std::string::npos) {
       	if (templine[0] == '\t') templine.erase(0, 1);
-    		templine.erase(0, stringPos + audience_start.length());
+    		templine.erase(0, audience_start.length());
+    		stringPos = templine.find(audience_stop);
+    		if (stringPos < std::string::npos) {
+    			templine.erase(stringPos, stringPos + audience_stop.length()); }
     		cout << templine << endl;
-		}	// while
+		}	// while audience
+		
+      while ((templine.find(location_start)) < std::string::npos) {
+      	if (templine[0] == '\t') templine.erase(0, 1);
+    		templine.erase(0, location_start.length());
+    		stringPos = templine.find(location_stop);
+    		if (stringPos < std::string::npos) {
+    			templine.erase(stringPos, stringPos + location_stop.length()); }
+    		cout << templine << endl;
+		}	// while location
+		
+      while ((templine.find(director_start)) < std::string::npos) {
+      	if (templine[0] == '\t') templine.erase(0, 1);
+    		templine.erase(0, director_start.length());
+    		stringPos = templine.find(director_stop);
+    		if (stringPos < std::string::npos) {
+    			templine.erase(stringPos, stringPos + director_stop.length()); }
+    		cout << templine << endl;
+		}	// while director
 		
    }  // while !videoReader.eof()
    
