@@ -192,7 +192,7 @@ void editVideo(Video* &vid, string field) {
 			getline(cin, entry);
 			persons.push_back(entry);
 		}
-		vid->setDirectors(persons);
+		//	vid->setDirectors(persons);
 	}
 	else if (field == "actors") {
 		cout << "Enter number of actors: ";
@@ -202,7 +202,7 @@ void editVideo(Video* &vid, string field) {
 			getline(cin, entry);
 			persons.push_back(entry);
 		}
-		vid->setActors(persons);
+		//	vid->setActors(persons);
 	}
 	else if (field == "released") {
 		cout << "Enter new Month: ";
@@ -393,7 +393,7 @@ int main(){
 		  cout << templine << endl;
 		  // TODO: add in actor to persons
 		  persons.push_back(templine); // pushback entry of director
-		  importVideo->setActors(persons);
+		  // importVideo->setActors(persons);
 
 	  }	// while actor
       
@@ -431,7 +431,7 @@ int main(){
 		cout << "save = save changes to list of Videos to external file" << endl;
 	}
 	else if (comm == "add") { // add new entry
-		addVideo(videos);
+		addVideo(videos, persons);
 	}
 	else if (comm == "description search") {
 		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
