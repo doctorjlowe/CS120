@@ -167,7 +167,7 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void editVideo(Video* &vid, string field) {
 	string entry;
 	unsigned int n;
-	vector<Person> addPeople;
+	vector<Person> persons;
 	unsigned short m, d, y;
 	if (field == "name") {
 		cout << "Enter new name: ";
@@ -190,9 +190,9 @@ void editVideo(Video* &vid, string field) {
 		for (int i = 0; i < n; ++i) {
 			cout << "Enter director: ";
 			getline(cin, entry);
-			addPeople.push_back(entry);
+			persons.push_back(entry);
 		}
-		vid->setDirectors(addPeople);
+		vid->setDirectors(persons);
 	}
 	else if (field == "actors") {
 		cout << "Enter number of actors: ";
@@ -200,9 +200,9 @@ void editVideo(Video* &vid, string field) {
 		for (int i = 0; i < n; ++i) {
 			cout << "Enter actor: ";
 			getline(cin, entry);
-			addPeople.push_back(entry);
+			persons.push_back(entry);
 		}
-		vid->setActors(addPeople);
+		vid->setActors(persons);
 	}
 	else if (field == "released") {
 		cout << "Enter new Month: ";
@@ -391,7 +391,12 @@ int main(){
 			  templine.erase(stringPos, stringPos + director_stop.length());
 		  }
 		  cout << templine << endl;
+<<<<<<< HEAD
 		  // TODO: add in actor to persons
+=======
+		  persons.push_back(templine); // pushback entry of director
+		  importVideo->setActors(persons);
+>>>>>>> origin/master
 	  }	// while actor
       
       while ((templine.find(movie_stop)) < std::string::npos) {

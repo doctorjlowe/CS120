@@ -1,5 +1,5 @@
 /****************************************************************
-File:             Video.h
+File:             Movie.cpp
 Description:      class declarations
 
 Author:           David && Evan

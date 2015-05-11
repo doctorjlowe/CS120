@@ -21,6 +21,7 @@ We hereby certify that this program is entirely our own work.
 
 class Movie : public Vids::Video {
 public:
+<<<<<<< HEAD
 	Movie();	// actually implement the constructor to avoid linker error
 	Movie(unsigned int series) {
 		seriesNum = series;
@@ -75,6 +76,13 @@ public:
 		else
 			return false;
 	}
+=======
+	Movie::Movie();
+	Movie::Movie(unsigned int series);
+	void Movie::display();
+	void Movie::displayAll();
+	bool Movie::searchTarget(string target)
+>>>>>>> origin/master
 	void setSeriesNum(unsigned int sn) { seriesNum = sn; }
 private:
 	unsigned int seriesNum;
