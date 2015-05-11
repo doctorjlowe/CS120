@@ -243,7 +243,7 @@ int main(){
    vector<string> temp(5);
 	int i = 0;
 	kind importKind = NONE;
-	Video* importVideo;
+	Video* importVideo = NULL;
    
    //cout << "What name should the Person File have?" << std::endl;
    //cin >> person_file_name;
@@ -305,7 +305,7 @@ int main(){
       while ((templine.find(movie_start)) < std::string::npos) {
     		templine.erase(0, movie_start.length());
     		importKind = MOVIE;
-    		importVideo = new Movie();
+    		importVideo = new Movie;
 		}	// while movie
 		
       while ((templine.find(name_start)) < std::string::npos) {
