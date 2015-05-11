@@ -40,7 +40,7 @@ void Television::display() { // order: name, audience, 1st director, 1st actor, 
 	cout << left << fixed << setw(4) << runtimeMinutes;
 	cout << left << fixed << setw(3) << season;
 	cout << endl;
-}// displays information for all objects of Video type
+}	// displays information for all objects of Video type
 
 void Television::displayAll() {
 	cout << "Name: " << name << endl;
@@ -77,16 +77,15 @@ bool Television::searchTarget(string target) {
 		|| name.find(target) != string::npos // search name
 		|| audience == target // if audience rating is equivalent
 		|| location.find(target) != string::npos // if it matches a location
-		|| searchPeople(target) // if relates to any people
 		|| dateToString(released).find(target) != string::npos // if it matches the released date
 		|| dateToString(viewed).find(target) != string::npos
 		|| seas.find(target)
 		|| ep.find(target)) { // if it matches the viewed date
 		return true;
-	}
+	}	// if
 	else
 		return false;
-}
+}	// searchTarget
 
 bool Television::searchDesc(string target) { // searches descriptions of episodes
 	for (int i = 0; i < episodeDesc.size(); ++i) {
