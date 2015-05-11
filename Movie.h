@@ -21,7 +21,7 @@ We hereby certify that this program is entirely our own work.
 
 class Movie : public Vids::Video {
 public:
-	Movie();
+	Movie() { seriesNum = 0; }
 	Movie(unsigned int series) {
 		seriesNum = series;
 	} // TODO: add parametized Video constructor
