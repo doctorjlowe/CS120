@@ -391,12 +391,10 @@ int main(){
 			  templine.erase(stringPos, stringPos + director_stop.length());
 		  }
 		  cout << templine << endl;
-<<<<<<< HEAD
 		  // TODO: add in actor to persons
-=======
 		  persons.push_back(templine); // pushback entry of director
 		  importVideo->setActors(persons);
->>>>>>> origin/master
+
 	  }	// while actor
       
       while ((templine.find(movie_stop)) < std::string::npos) {
