@@ -25,12 +25,12 @@ We hereby certify that this program is entirely our own work.
 using namespace std;
 using namespace Vids;
 
-struct Director {
+struct Direct {
 	char iMov;
 	char iPer;
 };
 
-struct Actor {
+struct Act {
 	char iMov;
 	char iPer;
 };
@@ -57,6 +57,23 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
 		cout << "No matches found for your entry." << endl;
 	return returnVector;
 } // print any found matches
+
+int searchPeople(vector<Person> &persons, string target) {
+	bool found = false;
+	int i = -1;
+	cout << "Searching..." << endl;
+	for (i = 0; i < persons.size(); ++i) {
+		// checks every field
+		if (persons.at(i).searchPeople(target)) {
+			found = true;
+			return i;
+		}	// if
+	}	// for
+	// if no matches are found, print message
+	if (!found)
+		cout << "No matches found for your entry." << endl;
+	return i;
+}
 
 void addVideo(vector<Video*> &videos, vector<Person> &people) {
 	Video* newAddVid;
@@ -230,8 +247,9 @@ int main(){
 	// Movie newMovie;
 	// Television newTelevision;
 	vector<Person> persons;
-	vector<Person> addPeople;
 	vector<Video*> videos;
+	vector<Act> actors;
+	vector<Direct> directors;
 	vector<int> matches;
 	string person_file_name = "Persons.dat";
 	string video_file_name = "Videos.dat";
@@ -256,6 +274,8 @@ int main(){
 	int i = 0;
 	kind importKind = NONE;
 	Video* importVideo = NULL;
+	Act newActor;
+	Direct newDirector;
    
    //cout << "What name should the Person File have?" << std::endl;
    //cin >> person_file_name;
@@ -354,6 +374,13 @@ int main(){
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + director_stop.length()); }
     		cout << templine << endl;
+			// TODO: add in director to persons
+			if (videos.size() == 0)
+				newDirector.iMov = 0;
+			else
+				newDirector.iMov = videos.size() - 1;
+			newDirector.iPer = searchPeople(persons, templine);
+			directors.push_back(newDirector);
 		}	// while director
 
 	  while ((templine.find(actor_start)) < std::string::npos) {
@@ -364,8 +391,7 @@ int main(){
 			  templine.erase(stringPos, stringPos + director_stop.length());
 		  }
 		  cout << templine << endl;
-		  addPeople.push_back(templine); // pushback entry of director
-		  importVideo->setActors(addPeople);
+		  // TODO: add in actor to persons
 	  }	// while actor
       
       while ((templine.find(movie_stop)) < std::string::npos) {
@@ -379,7 +405,7 @@ int main(){
     			videos.push_back(importVideo);
     		}	// else
 		}	// while movie stop
-		
+	  i++; // increment index store for actors and directors vectors
    }  // while !videoReader.eof()
    
    videoReader.close();	// close input file
