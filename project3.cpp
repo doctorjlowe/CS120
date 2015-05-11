@@ -242,9 +242,11 @@ int main(){
 	unsigned int tempInt = 0;
    vector<string> temp(5);
 	int i = 0;
+	kind importKind = NONE;
+	Video* importVideo;
    
-   //cout << "What name should the File have?" << std::endl;
-   //cin >> file_name;
+   //cout << "What name should the Person File have?" << std::endl;
+   //cin >> person_file_name;
 	
 	// open Person file
    ifstream personReader(person_file_name.c_str());
@@ -279,6 +281,9 @@ int main(){
    }  // while
    
    personReader.close();	// close input file
+   
+   //cout << "What name should the Video File have?" << std::endl;
+   //cin >> video_file_name;
 	
 	// open Video file
    ifstream videoReader(video_file_name.c_str());
@@ -298,8 +303,9 @@ int main(){
       if ( videoReader.eof() ) break;
       
       while ((templine.find(movie_start)) < std::string::npos) {
-    		templine.erase(0, stringPos + movie_start.length());
-    		cout << "Movie" << endl;
+    		templine.erase(0, movie_start.length());
+    		importKind = MOVIE;
+    		importVideo = new Movie();
 		}	// while movie
 		
       while ((templine.find(name_start)) < std::string::npos) {
@@ -308,7 +314,7 @@ int main(){
     		stringPos = templine.find(name_stop);
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + name_stop.length()); }
-    		cout << templine << endl;
+    		importVideo->setName(templine);
 		}	// while name
 		
       while ((templine.find(audience_start)) < std::string::npos) {
@@ -317,7 +323,7 @@ int main(){
     		stringPos = templine.find(audience_stop);
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + audience_stop.length()); }
-    		cout << templine << endl;
+    		importVideo->setAudience(templine);
 		}	// while audience
 		
       while ((templine.find(location_start)) < std::string::npos) {
@@ -326,7 +332,7 @@ int main(){
     		stringPos = templine.find(location_stop);
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + location_stop.length()); }
-    		cout << templine << endl;
+    		importVideo->setLocation(templine);
 		}	// while location
 		
       while ((templine.find(director_start)) < std::string::npos) {

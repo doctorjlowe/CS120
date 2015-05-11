@@ -27,7 +27,7 @@ template < typename T > string to_string( const T& n ) {
    return stm.str() ;
 }	// redefine to_string to avoid GCC bug
 
-enum kind {MOVIE, TELEVISION, COMPUTER};
+enum kind {NONE, MOVIE, TELEVISION, COMPUTER};
 // 'MOVIE' = standalone film of any length, whether it's part of a franchise or not
 // 'TELEVISION' = episode from mini- or recurring series
 // 'COMPUTER' = online or locally hosted files

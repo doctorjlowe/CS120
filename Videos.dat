@@ -1,11 +1,10 @@
-# the parser will interpret a hash at the beginning of line as a comment
-# the opening clause specifies which type of video of is encapsulated in this object
-# allowed field names will vary by type, but match up to object data members
-# for fields where multiple inputs make sense [like actors], the parser will add vector entries as necessary
-# for fields where multiples don't make sense, the parser should gracefully handle errors in the input file
-# one way to deal with this is to have the second input overwrite the first
-# if a field is not in this file, it will be blank in the object
-# tabs are there for human readability, the parser will ignore them
+the opening clause specifies which type of video of is encapsulated in this object
+allowed field names will vary by type, but match up to object data members
+for fields where multiple inputs make sense [like actors], the parser will add vector entries as necessary
+for fields where multiples don't make sense, the parser should gracefully handle errors in the input file
+one way to deal with this is to have the second input overwrite the first
+if a field is not in this file, it will be blank in the object
+tabs are there for human readability, the parser will ignore them
 <movie>
 	<name>12 Years a Slave</name>
 	<audience>R</audience>
