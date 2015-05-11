@@ -67,7 +67,6 @@ bool Computer::searchTarget(string target) {
 		|| name.find(target) != string::npos // search name
 		|| audience == target // if audience rating is equivalent
 		|| location.find(target) != string::npos // if it matches a location
-		|| searchPeople(target) // if relates to any people
 		|| dateToString(released).find(target) != string::npos // if it matches the released date
 		|| dateToString(viewed).find(target) != string::npos
 		|| homepage.find(target) != string::npos
