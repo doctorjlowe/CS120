@@ -58,7 +58,7 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
 	return returnVector;
 } // print any found matches
 
-void addVideo(vector<Video*> &videos) {
+void addVideo(vector<Video*> &videos, vector<Person> &people) {
 	Video* newAddVid;
 	vector<Person> addDirectors;
 	vector<Person> addActors;
@@ -136,15 +136,13 @@ void addVideo(vector<Video*> &videos) {
 	cout << "Enter the director(s): "; // TODO: add multiple
 	cin.ignore();
 	getline(cin, templine);
-	addDirectors.push_back(templine); // adds a director to the vector to be added
-	newAddVid->setDirectors(addDirectors); // sets directors to vector
+	people.push_back(templine); // adds a director to the people vector
 
 	// actors
 	cout << "Enter the actor(s): "; // TODO: add multiple
 	cin.ignore();
 	getline(cin, templine);
-	addActors.push_back(templine);
-	newAddVid->setActors(addActors);
+	people.push_back(templine); // add an actor to the people vector
 	// TODO: alphabetize vector entry?
 	videos.push_back(newAddVid); // if not, use this
 } // End addVideo

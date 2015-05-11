@@ -70,7 +70,7 @@ namespace Vids
 				if (people.at(i).firstName.find(target) != string::npos
 					|| people.at(i).middleName.find(target) != string::npos
 					|| people.at(i).lastName.find(target) != string::npos
-					|| people.at(i).lineage.find(target) != string::npos)
+					|| people.at(i).lineage.find(target) != string::npos) {
 					return true;
 			}	// for
 			return false;

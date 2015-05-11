@@ -23,15 +23,22 @@ Computer::Computer(string homepage, string source) {
 	this->source = source;
 }
 void Computer::display() { // order: name, audience, 1st director, 1st actor, runtime
-	string shortName = name;
-	string shortDirector = directors.at(0).getFirstName();
-	string shortActors = actors.at(0).getFirstName();
-	cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
+	if (name != "") {
+		string shortName = name;
+		cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
+	}
 	cout << left << fixed << setw(6) << audience;
-	cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
-	cout << left << fixed << setw(12) << Truncate(shortActors, 12);
+	if (directors.size() != 0) {
+		string shortDirector = directors.at(0).getFirstName();
+		cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
+	}
+	if (actors.size() != 0) {
+		string shortActors = actors.at(0).getFirstName();
+		cout << left << fixed << setw(12) << Truncate(shortActors, 12);
+	}
 	cout << left << fixed << setw(4) << runtimeMinutes;
 	cout << endl;
+
 }// displays information for all objects of Video type
 
 void Computer::displayAll() {
@@ -41,19 +48,11 @@ void Computer::displayAll() {
 	cout << "Location: " << location << endl;
 
 	cout << "Director(s): ";
-	for (int i = 0; i < directors.size(); ++i) { // directors
-		cout << directors.at(i);
-		if (i < directors.size())
-			cout << ", "; // if multiple, seperate by comma
-	}	// for directors
+	// TODO: print directors here?
 	cout << endl;
 
 	cout << "Actor(s): ";
-	for (int i = 0; i < actors.size(); ++i) { // actors
-		cout << actors.at(i);
-		if (i < actors.size())
-			cout << ", "; // if multiple, seperate by comma
-	}	// for actors
+	// TODO: print actors here?
 	cout << endl;
 
 	cout << "Date Released: " << released;

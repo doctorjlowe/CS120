@@ -40,7 +40,7 @@ namespace Vids
 	class Video{
 	
 		public:
-			Video() {} // default constructor
+			Video(); // default constructor
 			Video(string name, string audience, string location, Date released);
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object

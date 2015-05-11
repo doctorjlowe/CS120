@@ -50,19 +50,11 @@ public:
 		cout << "Location: " << location << endl;
 
 		cout << "Director(s): ";
-		for (int i = 0; i < directors.size(); ++i) { // directors
-			cout << directors.at(i);
-			if (i < directors.size())
-				cout << ", "; // if multiple, separate by comma
-		}
+		// TODO: add directors here?
 		cout << endl;
 
 		cout << "Actor(s): ";
-		for (int i = 0; i < actors.size(); ++i) { // actors
-			cout << actors.at(i);
-			if (i < actors.size())
-				cout << ", "; // if multiple, separate by comma
-		}
+		// TODO: add actors here?
 		cout << endl;
 
 		cout << "Date Released: " << released;
@@ -75,7 +67,6 @@ public:
 			|| name.find(target) != string::npos // search name
 			|| audience == target // if audience rating is equivalent
 			|| location.find(target) != string::npos // if it matches a location
-			|| searchPeople(target) // if relates to any people
 			|| dateToString(released).find(target) != string::npos // if it matches the released date
 			|| dateToString(viewed).find(target) != string::npos
 			|| ser.find(target)) { // if it matches the viewed date
