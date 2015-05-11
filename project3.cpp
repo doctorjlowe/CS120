@@ -25,6 +25,16 @@ We hereby certify that this program is entirely our own work.
 using namespace std;
 using namespace Vids;
 
+struct Director {
+	char iMov;
+	char iPer;
+};
+
+struct Actor {
+	char iMov;
+	char iPer;
+};
+
 void display(vector<Video*> &videos) { // displays all objects in vector
 	for (int i = 0; i < videos.size(); ++i) { videos.at(i)->display(); }
 }	// display
@@ -205,7 +215,7 @@ void editVideo(Video* &vid, string field) {
 		vid->setRuntimeMinutes(n);
 	}
 	else {
-		cout << "Error: this is not a valid field chioce." << endl;
+		cout << "Error: this is not a valid field choice." << endl;
 	}
 }
 
@@ -241,7 +251,7 @@ int main(){
 	string searchEntry;
 	size_t stringPos = 0;
 	unsigned int tempInt = 0;
-   vector<string> temp(5);
+	vector<string> temp(5);
 	int i = 0;
 	kind importKind = NONE;
 	Video* importVideo = NULL;
@@ -406,7 +416,7 @@ int main(){
 			// do nothing
 		}
 		else {
-			cout << "not a valid chioce" << endl;
+			cout << "not a valid choice" << endl;
 			continue;
 		}
 		cout << "Choose a field to edit: ";
