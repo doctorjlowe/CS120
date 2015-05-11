@@ -299,12 +299,14 @@ int main(){
 		}	// while movie
 		
       while ((templine.find(name_start)) < std::string::npos) {
-      	if (templine[0] == '\t') { templine.erase(0, 1); }
+      	if (templine[0] == '\t') templine.erase(0, 1);
     		templine.erase(0, stringPos + name_start.length());
+    		//if ((templine.find(name_start)) < std::string::npos) templine.erase(0, stringPos + name_start.length());
     		cout << templine << endl;
 		}	// while
 		
       while ((templine.find(audience_start)) < std::string::npos) {
+      	if (templine[0] == '\t') templine.erase(0, 1);
     		templine.erase(0, stringPos + audience_start.length());
     		cout << templine << endl;
 		}	// while
