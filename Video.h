@@ -40,7 +40,7 @@ namespace Vids
 	class Video{
 	
 		public:
-			Video(); // default constructor
+			Video() {} // default constructor
 			Video(string name, string audience, string location, vector<Person> directors,
 				vector<Person> actors, Date released);
 			virtual void display() = 0; // displays information for all objects of Video type
@@ -62,24 +62,8 @@ namespace Vids
 			void setViewed(Date in)  { viewed = in; }
 			string Truncate(string str, size_t width); // shortens output
 			string dateToString(Date &given);
-			bool searchPeople(string target) { // will search directors and actors for matching item
-				for (int j = 0; j < directors.size(); ++j) {
-					if (directors.at(j).getFirstName().find(target) != string::npos
-						|| directors.at(j).getMiddleName().find(target) != string::npos
-						|| directors.at(j).getLastName().find(target) != string::npos
-						|| directors.at(j).getLineage().find(target) != string::npos)
-						return true;
-				}
-				for (int i = 0; i < actors.size(); ++i) {
-					if (actors.at(i).getFirstName().find(target) != string::npos
-						|| actors.at(i).getMiddleName().find(target) != string::npos
-						|| actors.at(i).getLastName().find(target) != string::npos
-						|| actors.at(i).getLineage().find(target) != string::npos)
-						return true;
-				}
-			} // FIXME: doesn't know what directors or actors are if not in header file
-
 			// changes a Date into a string, with useful formatting
+			
 		protected:
 			short runtimeMinutes;
 			/* Theoretically runtime could be unsigned, but we might eventually 
@@ -90,10 +74,6 @@ namespace Vids
 			string location;
 			/* Location is a catch-all field for: URL, shelf disc is on, format 
 			type, name of person it is loaned to, etc. */
-			vector<Person> directors;
-			/* David: I considered using other containers, but none of them 
-			offered any obvious benefits over the vector. */
-			vector<Person> actors;
 			Date released;
 			Date viewed;
 			/* 'viewed' can be used to answer the question: "What haven't i 
