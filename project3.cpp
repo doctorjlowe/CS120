@@ -164,10 +164,10 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 	videos.push_back(newAddVid); // if not, use this
 } // End addVideo
 
-void editVideo(Video* &vid, string field) {
+// video to be edited (from vector), whole vector of People, designated field to search
+void editVideo(Video* &vid, vector<Person> &persons, string field) {
 	string entry;
 	unsigned int n;
-	vector<Person> persons;
 	unsigned short m, d, y;
 	if (field == "name") {
 		cout << "Enter new name: ";
@@ -190,9 +190,9 @@ void editVideo(Video* &vid, string field) {
 		for (int i = 0; i < n; ++i) {
 			cout << "Enter director: ";
 			getline(cin, entry);
-			persons.push_back(entry);
+			if (searchPeople(persons, entry) != -1) // if the entry is not found in persons, add it
+				persons.push_back(entry);
 		}
-		vid->setDirectors(persons);
 	}
 	else if (field == "actors") {
 		cout << "Enter number of actors: ";
@@ -200,9 +200,9 @@ void editVideo(Video* &vid, string field) {
 		for (int i = 0; i < n; ++i) {
 			cout << "Enter actor: ";
 			getline(cin, entry);
-			persons.push_back(entry);
+			if (searchPeople(persons, entry) != -1) // if the entry is not found in persons, add it
+				persons.push_back(entry);
 		}
-		vid->setActors(persons);
 	}
 	else if (field == "released") {
 		cout << "Enter new Month: ";
@@ -461,11 +461,12 @@ int main(){
 			cout << "not a valid choice" << endl;
 			continue;
 		}
-		cout << "Choose a field to edit: ";
-		// TODO: print field names
-		cin >> templine;
-		if (comm == "edit")
+		if (comm == "edit") {
+			cout << "Choose a field to edit: ";
+			// TODO: print field names
+			cin >> templine;
 			editVideo(videos.at(matches.at(0)), templine); // call function to edit matched index
+		}	
 		else if (comm == "loan")
 			editVideo(videos.at(matches.at(0)), "location");
 		cout << "Update sucessful." << endl; // FIXME: working?
