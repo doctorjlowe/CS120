@@ -73,7 +73,7 @@ namespace Vids
 					|| people.at(i).lineage.find(target) != string::npos)
 					return true;
 				}	// if
-			}
+			}	// for
 			return false;
 		} // FIXME: doesn't know what directors or actors are if not in header file
 	
