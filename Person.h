@@ -64,6 +64,18 @@ namespace Vids
 		string getLastName() const { return lastName; }
 		string getMiddleName() const { return middleName; }
 		string getLineage() const { return lineage; }
+		
+		bool searchPeople(vector<Person> people, string target) { // will search directors and actors for matching item
+			for (int i = 0; i < people.size(); ++i) {
+				if (people.at(i).firstName.find(target) != string::npos
+					|| people.at(i).middleName.find(target) != string::npos
+					|| people.at(i).lastName.find(target) != string::npos
+					|| people.at(i).lineage.find(target) != string::npos)
+					return true;
+				}	// if
+			}	// for
+			return false;
+		} // FIXME: doesn't know what directors or actors are if not in header file
 	
 	private:
 		string firstName;
