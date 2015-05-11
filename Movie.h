@@ -21,7 +21,7 @@ We hereby certify that this program is entirely our own work.
 
 class Movie : public Vids::Video {
 public:
-	Movie() { seriesNum = 0; }
+	Movie() { seriesNum = 0; }	// actually implement the constructor to avoid linker error
 	Movie(unsigned int series) {
 		seriesNum = series;
 	} // TODO: add parametized Video constructor
