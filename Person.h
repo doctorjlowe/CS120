@@ -72,7 +72,6 @@ namespace Vids
 					|| people.at(i).lastName.find(target) != string::npos
 					|| people.at(i).lineage.find(target) != string::npos)
 					return true;
-				}	// if
 			}	// for
 			return false;
 		} // FIXME: doesn't know what directors or actors are if not in header file
