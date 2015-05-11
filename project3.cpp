@@ -222,6 +222,7 @@ int main(){
 	// Movie newMovie;
 	// Television newTelevision;
 	vector<Person> persons;
+	vector<Person> addPeople;
 	vector<Video*> videos;
 	vector<int> matches;
 	string person_file_name = "Persons.dat";
@@ -231,11 +232,13 @@ int main(){
 	string audience_start = "<audience>";
 	string location_start = "<location>";
 	string director_start = "<director>";
+	string actor_start = "<actor>";
 	string movie_stop = "</movie>";
 	string name_stop = "</name>";
 	string audience_stop = "</audience>";
 	string location_stop = "</location>";
 	string director_stop = "</director>";
+	string actor_stop = "</actor>";
 	string templine;
 	string comm;
 	string searchEntry;
@@ -344,6 +347,18 @@ int main(){
     			templine.erase(stringPos, stringPos + director_stop.length()); }
     		cout << templine << endl;
 		}	// while director
+
+	  while ((templine.find(actor_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, actor_start.length());
+		  stringPos = templine.find(actor_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + director_stop.length());
+		  }
+		  cout << templine << endl;
+		  addPeople.push_back(templine); // pushback entry of director
+		  importVideo->setActors(addPeople);
+	  }	// while actor
       
       while ((templine.find(movie_stop)) < std::string::npos) {
     		templine.erase(0, movie_stop.length());
