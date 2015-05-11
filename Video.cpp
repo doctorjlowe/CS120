@@ -17,14 +17,17 @@ using namespace std;
 
 namespace Vids
 {
-	Video::Video(){}
-	Video::Video(string name, string audience, string location, vector<Person> directors,
-		vector<Person> actors, Date released) {
+	Video::Video(){
+		runtimeMinutes = 0;
+		name = "";
+		audience = "";
+		location = "";
+		// TODO: add custom class defaults?
+	}
+	Video::Video(string name, string audience, string location, Date released) {
 		this->name = name;
 		this->audience = audience;
 		this->location = location;
-		this->directors = directors;
-		this->actors = actors;
 		this->released = released;
 	}	/* parameterized constructor */
 

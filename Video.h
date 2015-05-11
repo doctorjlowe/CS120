@@ -41,8 +41,7 @@ namespace Vids
 	
 		public:
 			Video() {} // default constructor
-			Video(string name, string audience, string location, vector<Person> directors,
-				vector<Person> actors, Date released);
+			Video(string name, string audience, string location, Date released);
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object
 			bool searchTarget(string target) { return 0; } // TODO: used to search additonal fields in derived classes

@@ -26,13 +26,19 @@ public:
 		seriesNum = series;
 	} // TODO: add parametized Video constructor
 	void display() { // order: name, audience, 1st director, 1st actor, runtime
-		string shortName = name;
-		string shortDirector = directors.at(0).getFirstName();
-		string shortActors = actors.at(0).getFirstName();
-		cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
+		if (name != "") {
+			string shortName = name;
+			cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
+		}
 		cout << left << fixed << setw(6) << audience;
-		cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
-		cout << left << fixed << setw(12) << Truncate(shortActors, 12);
+		if (directors.size() != 0) {
+			string shortDirector = directors.at(0).getFirstName();
+			cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
+		}
+		if (actors.size() != 0) {
+			string shortActors = actors.at(0).getFirstName();
+			cout << left << fixed << setw(12) << Truncate(shortActors, 12);
+		}
 		cout << left << fixed << setw(4) << runtimeMinutes;
 		cout << endl;
 
