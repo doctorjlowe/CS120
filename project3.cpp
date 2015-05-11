@@ -231,6 +231,7 @@ int main(){
 	string audience_start = "<audience>";
 	string location_start = "<location>";
 	string director_start = "<director>";
+	string movie_stop = "</movie>";
 	string name_stop = "</name>";
 	string audience_stop = "</audience>";
 	string location_stop = "</location>";
@@ -306,7 +307,7 @@ int main(){
     		templine.erase(0, movie_start.length());
     		importKind = MOVIE;
     		importVideo = new Movie;
-		}	// while movie
+		}	// while movie start
 		
       while ((templine.find(name_start)) < std::string::npos) {
       	if (templine[0] == '\t') templine.erase(0, 1);
@@ -343,6 +344,18 @@ int main(){
     			templine.erase(stringPos, stringPos + director_stop.length()); }
     		cout << templine << endl;
 		}	// while director
+      
+      while ((templine.find(movie_stop)) < std::string::npos) {
+    		templine.erase(0, movie_stop.length());
+    		if (importKind != MOVIE) {
+    			cout << "Wrong importKind" << endl;
+    			break;
+    		}	// if
+    		else {
+    			cout << "Closing Movie" << endl;
+    			videos.push_back(importVideo);
+    		}	// else
+		}	// while movie stop
 		
    }  // while !videoReader.eof()
    
