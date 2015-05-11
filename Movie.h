@@ -21,8 +21,8 @@ We hereby certify that this program is entirely our own work.
 
 class Movie : public Vids::Video {
 public:
-	Movie::Movie();
-	Movie::Movie(unsigned int series);
+	Movie();
+	Movie(unsigned int series);
 	void Movie::display();
 	void Movie::displayAll();
 	bool Movie::searchTarget(string target)
