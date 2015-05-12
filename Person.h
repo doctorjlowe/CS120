@@ -93,11 +93,10 @@ namespace Vids
 				return true;
 			return false;
 		} // FIXME: doesn't know what directors or actors are if not in header file
-		void display() {
-			cout << left << fixed << setw(15); // keep above to retain blank space in absence of name
+		void display() { // keep above to retain blank space in absence of name
 			if (firstName != "") {
 				string firstLast = firstName + " " + lastName;
-				cout << Truncate(firstLast, 11);
+				cout << left << fixed << std::setw(15) << Truncate(firstLast, 11);
 			}
 		}
 		void displayAll() {

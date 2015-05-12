@@ -179,7 +179,7 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void editVideo(Video* &vid, vector<Person> &persons, string field) {
 	string entry;
 	unsigned int n;
-	int m = 0;
+	int j = 0;
 	unsigned short m, d, y;
 
 	if (field == "directors" || field == "actors") {
@@ -189,7 +189,7 @@ void editVideo(Video* &vid, vector<Person> &persons, string field) {
 			cout << "Enter " << field.substr(0, field.length() - 1) << ": ";
 			getline(cin, entry);
 			m = searchPeople(persons, entry);
-			if (m == -1) { // if searchPeople did not find the person, add them
+			if (j == -1) { // if searchPeople did not find the person, add them
 				persons.push_back(entry);
 				// TODO: link in actors and directors
 			}
