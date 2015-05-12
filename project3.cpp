@@ -25,12 +25,7 @@ We hereby certify that this program is entirely our own work.
 using namespace std;
 using namespace Vids;
 
-struct Direct {
-	char iMov;
-	char iPer;
-};
-
-struct Act {
+struct Link {
 	char iMov;
 	char iPer;
 };
@@ -260,8 +255,8 @@ int main(){
 	// Television newTelevision;
 	vector<Person> persons;
 	vector<Video*> videos;
-	vector<Act> actors;
-	vector<Direct> directors;
+	vector<Link> actors;
+	vector<Link> directors;
 	vector<int> matches;
 	string person_file_name = "Persons.dat";
 	string video_file_name = "Videos.dat";
@@ -290,8 +285,8 @@ int main(){
 	int iReturn = 0;
 	kind importKind = NONE;
 	Video* importVideo = NULL;
-	Act newActor;
-	Direct newDirector;
+	Link newActor;
+	Link newDirector;
 	unsigned char words = 0;
 	vector<string> nameVec;
    
