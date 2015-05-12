@@ -93,6 +93,26 @@ namespace Vids
 				return true;
 			return false;
 		} // FIXME: doesn't know what directors or actors are if not in header file
+		void display() {
+			cout << left << fixed << setw(15); // keep above to retain blank space in absence of name
+			if (firstName != "") {
+				string firstLast = firstName + " " + lastName;
+				cout << Truncate(firstLast, 11);
+			}
+		}
+		void displayAll() {
+			cout << "First name: " << firstName << endl;
+			cout << "Middle name: " << middleName << endl;
+			cout << "Last name: " << lastName << endl;
+			if (lineage != "")
+				cout << "Lineage: " << lineage << endl;
+			cout << birthday.getMonth() << "/" << birthday.getDay() << "/" << birthday.getYear() << endl;
+		}
+		string Truncate(string str, size_t width) { // shortens output
+			if (str.length() > width)
+				return str.substr(0, width) + "...";
+			return str;
+		}	// truncate
 	
 	private:
 		string firstName;

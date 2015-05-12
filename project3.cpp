@@ -30,8 +30,24 @@ struct Link {
 	char iPer;
 };
 
-void display(vector<Video*> &videos) { // displays all objects in vector
-	for (int i = 0; i < videos.size(); ++i) { videos.at(i)->display(); }
+void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
+	int j = 0; // counts unevenly through directors
+	int k = 0; // counts unevenly through actors
+	int currDir;
+	int currAct;
+	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
+	for (int i = 0; i < videos.size(); ++i) {
+		videos.at(i)->display();
+		while (directors.at(j).iMov == i) { // while directors.iMov is the same index as i
+			persons.at(directors.at(j).iPer).display(); // display the person in directors
+			j++;
+		}
+		while (actors.at(k).iMov == i) { // while actors.iMov is the same index as i
+			persons.at(directors.at(k).iPer).display(); // display the person in actors
+			k++;
+		}
+		cout << endl;
+	}
 }	// display
 
 vector<int> searchVideos(vector<Video*> &videos, string target) {
@@ -163,31 +179,37 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void editVideo(Video* &vid, vector<Person> &persons, string field) {
 	string entry;
 	unsigned int n;
+	int m = 0;
 	unsigned short m, d, y;
+
+	if (field == "directors" || field == "actors") {
+		cout << "Enter number of " << field << ": ";
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cout << "Enter " << field.substr(0, field.length() - 1) << ": ";
+			getline(cin, entry);
+			m = searchPeople(persons, entry);
+			if (m == -1) { // if searchPeople did not find the person, add them
+				persons.push_back(entry);
+				// TODO: link in actors and directors
+			}
+			else {
+				// TODO: link in actors and directors
+			}
+		}
+	}
+
+	cout << "Enter new " << field << ": ";
+	getline(cin, entry);
+
 	if (field == "name") {
-		cout << "Enter new name: ";
-		getline(cin, entry);
 		vid->setName(entry);
 	}
 	else if (field == "audience") {
-		cout << "Enter new audience: ";
-		getline(cin, entry);
 		vid->setAudience(entry);
 	}
 	else if (field == "location") {
-		cout << "Enter a new location: ";
-		getline(cin, entry);
 		vid->setLocation(entry);
-	}
-	else if (field == "directors") {
-		cout << "Enter number of directors: ";
-		cin >> n;
-		for (int i = 0; i < n; ++i) {
-			cout << "Enter director: ";
-			getline(cin, entry);
-			if (searchPeople(persons, entry) != -1) // if the entry is not found in persons, add it
-				persons.push_back(entry);
-		}
 	}
 	else if (field == "actors") {
 		cout << "Enter number of actors: ";
@@ -567,7 +589,7 @@ int main(){
 		cout << "runtime minutes - 135 or 60" << endl;
 	}
 	else if (comm == "print") { // print videos
-		display(videos); // FIXME: working?
+		display(videos, persons, directors, actors); // FIXME: working?
 	}
 	else if (comm == "quit") {
 		break; // quit program
