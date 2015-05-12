@@ -10,4 +10,7 @@ tabs are there for human readability, the parser will ignore them
 	<audience>R</audience>
 	<location>Blu-Ray</location>
 	<director>Steve McQueen</director>
+	<actor>Chiwetel Ejiofor</actor>
+	<actor>Michael Kenneth Williams</actor>
+	<actor>Michael Fassbender</actor>
 </movie>

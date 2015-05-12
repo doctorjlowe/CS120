@@ -241,6 +241,18 @@ void remove(vector<Video*> &videos, vector<int> matches) {
 	}
 }
 
+unsigned char split (const string& s, char c, vector<string>& v) {
+	string::size_type i = 0;
+	string::size_type j = s.find(c);
+	while (j != string::npos) {
+		v.push_back(s.substr(i, j-i));
+		i = ++j;
+		j = s.find(c, j);
+		if (j == string::npos) v.push_back(s.substr(i, s.length()));
+	}	// while
+	return v.size();
+}	// split(
+
 int main(){
 
 	Person newPerson;
@@ -280,6 +292,8 @@ int main(){
 	Video* importVideo = NULL;
 	Act newActor;
 	Direct newDirector;
+	unsigned char words = 0;
+	vector<string> nameVec;
    
    //cout << "What name should the Person File have?" << std::endl;
    //cin >> person_file_name;
@@ -377,19 +391,36 @@ int main(){
     		stringPos = templine.find(director_stop);
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + director_stop.length()); }
-    		cout << templine << endl;
 
-			// j = letter reading position, k = which name is being added
-			while (templine[j] != NULL) { // this should add each part of the name to the newPerson
-				tempName[j] = templine[j];
-				if (templine[j] == ' ') {
-					newPerson.setName(tempName, k++);
-					tempName = ""; // empty tempname after adding
-				}
-				j++;
-			}
-			j = 0; // reset
-			k = 0; // reset
+			words = split(templine, ' ', nameVec);
+			newPerson.setName(nameVec.at(0), 0);
+			switch (words) {
+				case 1:
+					break;
+				case 2:
+					newPerson.setName(nameVec.at(1), 1);
+					cout << "Last: " << nameVec.at(1) << endl;
+					break;
+				case 3:
+					newPerson.setName(nameVec.at(1), 2);
+					cout << "Middle: " << nameVec.at(1) << endl;
+					newPerson.setName(nameVec.at(2), 1);
+					cout << "Last: " << nameVec.at(2) << endl;
+					break;
+				case 4:
+					newPerson.setName(nameVec.at(1), 2);
+					cout << "Middle: " << nameVec.at(1) << endl;
+					newPerson.setName(nameVec.at(2), 1);
+					cout << "Last: " << nameVec.at(2) << endl;
+					newPerson.setName(nameVec.at(3), 3);
+					cout << "Lineage: " << nameVec.at(3) << endl;
+					break;
+				default:
+					cout << words << "is invalid for: " << templine << endl;
+					break;
+			}	// switch
+			nameVec.resize(0);
+			words = 0;
 
 			// TODO: add in birthday to persons
 
@@ -415,19 +446,36 @@ int main(){
 		  if (stringPos < std::string::npos) {
 			  templine.erase(stringPos, stringPos + director_stop.length());
 		  }
-		  cout << templine << endl;
 
-		  // j = letter reading position, k = which name is being added
-		  while (templine[j] != NULL) { // this should add each part of the name to the newPerson
-			  tempName[j] = templine[j];
-			  if (templine[j] == ' ') {
-				  newPerson.setName(tempName, k++);
-				  tempName = ""; // empty tempname after adding
-			  }
-			  j++;
-		  }
-		  j = 0; // reset
-		  k = 0; // reset
+			words = split(templine, ' ', nameVec);
+			newPerson.setName(nameVec.at(0), 0);
+			switch (words) {
+				case 1:
+					break;
+				case 2:
+					newPerson.setName(nameVec.at(1), 1);
+					cout << "Last: " << nameVec.at(1) << endl;
+					break;
+				case 3:
+					newPerson.setName(nameVec.at(1), 2);
+					cout << "Middle: " << nameVec.at(1) << endl;
+					newPerson.setName(nameVec.at(2), 1);
+					cout << "Last: " << nameVec.at(2) << endl;
+					break;
+				case 4:
+					newPerson.setName(nameVec.at(1), 2);
+					cout << "Middle: " << nameVec.at(1) << endl;
+					newPerson.setName(nameVec.at(2), 1);
+					cout << "Last: " << nameVec.at(2) << endl;
+					newPerson.setName(nameVec.at(3), 3);
+					cout << "Lineage: " << nameVec.at(3) << endl;
+					break;
+				default:
+					cout << words << "is invalid for: " << templine << endl;
+					break;
+			}	// switch
+			nameVec.resize(0);
+			words = 0;
 
 		  // TODO: add in actor to persons
 
@@ -447,7 +495,6 @@ int main(){
     			break;
     		}	// if
     		else {
-    			cout << "Closing Movie" << endl;
     			videos.push_back(importVideo);
     		}	// else
 		}	// while movie stop
