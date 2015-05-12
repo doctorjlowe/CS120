@@ -63,7 +63,27 @@ namespace Vids
 		string getFirstName() const { return firstName; }
 		string getLastName() const { return lastName; }
 		string getMiddleName() const { return middleName; }
-		string getLineage() const { return lineage; }
+		string getLineage() { return lineage; }
+		void setName(string name, int whichName) {
+			if (whichName == 0) {
+				firstName = name;
+			}
+			else if (whichName == 1) {
+				lastName = name;
+			}
+			else if (whichName == 2) {
+				middleName = name;
+			}
+			else if (whichName == 3) {
+				lineage = name;
+			}
+			else
+				cout << "Error: setting new name." << endl;
+		}
+		void setFirstName(string f) { firstName = f; }
+		void setLastName(string l) { lastName = l; }
+		void setMiddleName(string m) { middleName = m; }
+		void setLineage(string l) { lineage = l; }
 
 		bool searchPeople(string target) { // will search directors and actors for matching item
 			if (firstName.find(target) != string::npos

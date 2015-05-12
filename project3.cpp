@@ -266,12 +266,16 @@ int main(){
 	string director_stop = "</director>";
 	string actor_stop = "</actor>";
 	string templine;
+	string tempName;
 	string comm;
 	string searchEntry;
 	size_t stringPos = 0;
 	unsigned int tempInt = 0;
 	vector<string> temp(5);
 	int i = 0;
+	int j = 0; // used to keep track of names
+	int k = 0; // used to keep track of which name is being added
+	int iReturn = 0;
 	kind importKind = NONE;
 	Video* importVideo = NULL;
 	Act newActor;
@@ -374,12 +378,33 @@ int main(){
     		if (stringPos < std::string::npos) {
     			templine.erase(stringPos, stringPos + director_stop.length()); }
     		cout << templine << endl;
-			// TODO: add in director to persons
+
+			// j = letter reading position, k = which name is being added
+			while (templine[j] != NULL) { // this should add each part of the name to the newPerson
+				tempName[j] = templine[j];
+				if (templine[j] == ' ') {
+					newPerson.setName(tempName, k++);
+					tempName = ""; // empty tempname after adding
+				}
+				j++;
+			}
+			j = 0; // reset
+			k = 0; // reset
+
+			// TODO: add in birthday to persons
+
 			if (videos.size() == 0)
 				newDirector.iMov = 0;
 			else
 				newDirector.iMov = videos.size() - 1;
-			newDirector.iPer = searchPeople(persons, templine);
+
+			iReturn = searchPeople(persons, templine); // returned index of person
+			if (iReturn == -1) { // if not already in persons, add it
+				persons.push_back(templine);
+				newDirector.iPer = persons.size() - 1;
+			}
+			else // if found,
+				newDirector.iPer = iReturn;
 			directors.push_back(newDirector);
 		}	// while director
 
@@ -391,9 +416,27 @@ int main(){
 			  templine.erase(stringPos, stringPos + director_stop.length());
 		  }
 		  cout << templine << endl;
+
+		  // j = letter reading position, k = which name is being added
+		  while (templine[j] != NULL) { // this should add each part of the name to the newPerson
+			  tempName[j] = templine[j];
+			  if (templine[j] == ' ') {
+				  newPerson.setName(tempName, k++);
+				  tempName = ""; // empty tempname after adding
+			  }
+			  j++;
+		  }
+		  j = 0; // reset
+		  k = 0; // reset
+
 		  // TODO: add in actor to persons
-		  persons.push_back(templine); // pushback entry of director
-		  // importVideo->setActors(persons);
+
+		  if (videos.size() == 0)
+			  newActor.iMov = 0;
+		  else
+			  newActor.iMov = videos.size() - 1;
+		  newActor.iPer = searchPeople(persons, templine);
+		  actors.push_back(newActor); // pushback entry of actor
 
 	  }	// while actor
       
@@ -465,10 +508,10 @@ int main(){
 			cout << "Choose a field to edit: ";
 			// TODO: print field names
 			cin >> templine;
-			editVideo(videos.at(matches.at(0)), templine); // call function to edit matched index
+			editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
 		}	
 		else if (comm == "loan")
-			editVideo(videos.at(matches.at(0)), "location");
+			editVideo(videos.at(matches.at(0)), persons, "location");
 		cout << "Update sucessful." << endl; // FIXME: working?
 	}
 	else if (comm == "help search") {
