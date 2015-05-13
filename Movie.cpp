@@ -47,14 +47,22 @@ void Movie::displayAll() {
 }
 
 bool Movie::searchTarget(string target) {
+	cout << "calling searchTarget()..." << endl; // FIXME: remove
 	string ser = to_string(seriesNum);
-	if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
-		|| name.find(target) != string::npos // search name
+	size_t runMin = getRuntimeMinutes().find(target);
+	size_t nm = name.find(target);
+	size_t loc = location.find(target);
+	size_t rel = dateToString(released).find(target);
+	size_t view = dateToString(viewed).find(target);
+	size_t series = ser.find(target);
+
+	if (runMin != string::npos // search string of runtimeMinutes
+		|| nm != string::npos // search name
 		|| audience == target // if audience rating is equivalent
-		|| location.find(target) != string::npos // if it matches a location
-		|| dateToString(released).find(target) != string::npos // if it matches the released date
-		|| dateToString(viewed).find(target) != string::npos
-		|| ser.find(target)) { // if it matches the viewed date
+		|| loc != string::npos // if it matches a location
+		|| rel != string::npos // if it matches the released date
+		|| view != string::npos
+		|| series) { // if it matches the viewed date
 		return true;
 	}
 	else
