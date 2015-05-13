@@ -7,11 +7,9 @@ if a field is not in this file, it will be blank in the object
 tabs are there for human readability, the parser will ignore them
 <movie>
 	<name>12 Years a Slave</name>
-	<audience>PG</audience>
-	<location>VHS</location>
-	<director>Jim Abrahams</director>
-	<director>David Zucker</director>
-	<director>Jerry Zucker</director>
+	<audience>R</audience>
+	<location>Blu-Ray</location>
+	<director>Steve McQueen</director>
 	<actor>Chiwetel Ejiofor</actor>
 	<actor>Michael Kenneth Williams</actor>
 	<actor>Michael Fassbender</actor>
@@ -19,9 +17,11 @@ tabs are there for human readability, the parser will ignore them
 </movie>
 <movie>
 	<name>Airplane!</name>
-	<audience>R</audience>
-	<location>Blu-Ray</location>
-	<director>Steve McQueen</director>
+	<audience>PG</audience>
+	<location>VHS</location>
+	<director>Jim Abrahams</director>
+	<director>David Zucker</director>
+	<director>Jerry Zucker</director>
 	<actor>Robert Hays</actor>
 	<actor>Julie Hagerty</actor>
 	<actor>Leslie Nielsen</actor>

@@ -318,7 +318,7 @@ int main(){
    Link newLink;
    unsigned char words = 0;
    vector<string> nameVec;
-   vector<unsigned char> dateVec;
+   vector<unsigned char> dateVec(3);
    int tempPerson, tempVideo;
    
    //cout << "What name should the Person File have?" << std::endl;
@@ -448,7 +448,7 @@ int main(){
                cout << "Lineage: " << nameVec.at(3) << endl;
                break;
             default:
-               cout << words << "is invalid for: " << templine << endl;
+               cout << "director " << words << "is invalid for: " << templine << endl;
                break;
          }  // switch
          nameVec.resize(0);
@@ -502,7 +502,7 @@ int main(){
                cout << "Lineage: " << nameVec.at(3) << endl;
                break;
             default:
-               cout << words << "is invalid for: " << templine << endl;
+               cout << "actor " << words << "is invalid for: " << templine << endl;
                break;
          }  // switch
          nameVec.resize(0);
@@ -534,6 +534,8 @@ int main(){
          dateVec.at(0) = atoi(nameVec.at(0).c_str());
          dateVec.at(1) = atoi(nameVec.at(1).c_str());
          dateVec.at(2) = atoi(nameVec.at(2).c_str());
+         nameVec.resize(0);
+         words = 0;
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
          importVideo->setReleased(importDate);
      }   // while released
@@ -628,7 +630,7 @@ int main(){
 	}	// if help search
    else if (comm == "people") { // print persons
       for (i = 0; i < persons.size(); ++i) {
-      	cout << persons.at(i).getFirstName() << endl;
+      	cout << persons.at(i).getFirstName() << ' ' << persons.at(i).getLastName() << endl;
       }	// for
    }	// people
 	else if (comm == "print") { // print videos
