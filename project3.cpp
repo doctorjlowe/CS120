@@ -297,12 +297,14 @@ int main(){
    string location_start = "<location>";
    string director_start = "<director>";
    string actor_start = "<actor>";
+   string released_start = "<released>";
    string movie_stop = "</movie>";
    string name_stop = "</name>";
    string audience_stop = "</audience>";
    string location_stop = "</location>";
    string director_stop = "</director>";
    string actor_stop = "</actor>";
+   string released_stop = "</released>";
    string templine;
    string tempName;
    string comm;
@@ -430,6 +432,8 @@ int main(){
                cout << "Last: " << nameVec.at(1) << endl;
                break;
             case 3:
+            /* note that there is no simple way to detect a person with 
+            lineage but no middle name. */
                newPerson.setName(nameVec.at(1), 2);
                cout << "Middle: " << nameVec.at(1) << endl;
                newPerson.setName(nameVec.at(2), 1);
@@ -470,8 +474,7 @@ int main(){
         templine.erase(0, actor_start.length());
         stringPos = templine.find(actor_stop);
         if (stringPos < std::string::npos) {
-           templine.erase(stringPos, stringPos + director_stop.length());
-        }
+           templine.erase(stringPos, stringPos + actor_stop.length()); }
 
          words = split(templine, ' ', nameVec);
          newPerson.setName(nameVec.at(0), 0);
@@ -483,6 +486,8 @@ int main(){
                cout << "Last: " << nameVec.at(1) << endl;
                break;
             case 3:
+            /* note that there is no simple way to detect a person with 
+            lineage but no middle name. */
                newPerson.setName(nameVec.at(1), 2);
                cout << "Middle: " << nameVec.at(1) << endl;
                newPerson.setName(nameVec.at(2), 1);
@@ -517,7 +522,6 @@ int main(){
             cout << "That director is already in the database." << endl;
          }	// else
          actors.push_back(newLink);
-
      }   // while actor
       
       while ((templine.find(movie_stop)) < std::string::npos) {
