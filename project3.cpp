@@ -291,19 +291,31 @@ int main(){
    string person_file_name = "Persons.dat";
    string video_file_name = "Videos.dat";
    string movie_start = "<movie>";
+   string tv_start = "<television>";
+   string computer_start = "<computer>";
    string name_start = "<name>";
    string audience_start = "<audience>";
    string location_start = "<location>";
    string director_start = "<director>";
    string actor_start = "<actor>";
    string released_start = "<released>";
+   string season_start = "<season>";
+   string episode_start = "<episode>";
+   string homepage_start = "<homepage>";
+   string source_start = "<source>";
    string movie_stop = "</movie>";
+   string tv_stop = "</television>";
+   string computer_stop = "</computer>";
    string name_stop = "</name>";
    string audience_stop = "</audience>";
    string location_stop = "</location>";
    string director_stop = "</director>";
    string actor_stop = "</actor>";
    string released_stop = "</released>";
+   string season_stop = "</season>";
+   string episode_stop = "</episode>";
+   string homepage_stop = "</homepage>";
+   string source_stop = "</source>";
    string templine;
    string tempName;
    string comm;
@@ -383,6 +395,12 @@ int main(){
          importKind = MOVIE;
          importVideo = new Movie;
       }  // while movie start
+
+	  while ((templine.find(tv_start)) < std::string::npos) {
+		  templine.erase(0, tv_start.length());
+		  importKind = TELEVISION;
+		  importVideo = new Television;
+	  }  // while television start
       
       while ((templine.find(name_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
@@ -410,6 +428,50 @@ int main(){
             templine.erase(stringPos, stringPos + location_stop.length()); }
          importVideo->setLocation(templine);
       }  // while location
+
+	  while ((templine.find(season_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, season_start.length());
+		  stringPos = templine.find(season_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + season_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Television))
+			  dynamic_cast<Television*>(importVideo)->setSeason(templine); // TODO: setEpisode not written
+	  }  // while season
+
+	  while ((templine.find(episode_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, episode_start.length());
+		  stringPos = templine.find(episode_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + episode_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Television))
+			  dynamic_cast<Television*>(importVideo)->setEpisode(templine); // TODO: setEpisode not written
+	  }  // while episode
+
+	  while ((templine.find(homepage_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, homepage_start.length());
+		  stringPos = templine.find(homepage_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + homepage_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Computer))
+			  dynamic_cast<Computer*>(importVideo)->setHomepage(templine);
+	  }  // while homepage
+
+	  while ((templine.find(source_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, source_start.length());
+		  stringPos = templine.find(source_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + source_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Computer))
+			  dynamic_cast<Computer*>(importVideo)->setSource(templine);
+	  }  // while source
       
       while ((templine.find(director_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);

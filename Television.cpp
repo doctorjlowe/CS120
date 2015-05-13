@@ -84,3 +84,11 @@ bool Television::searchDesc(string target) { // searches descriptions of episode
 	}
 	return false; // if not found matching descriptions, return false
 }
+
+void Television::setSeason(string s) {
+	//TODO: get from string to int
+}
+
+void Television::setEpisode(string e) {
+	//TODO: get from string to int
+}
