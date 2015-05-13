@@ -47,8 +47,8 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
    cout << "Which type to add?(Movie, Television, Computer) ";
    cin >> templine;
    if (templine == "Movie") {
-      cout << "Which installment in a series is it? ";
-      cin >> tempInt;
+	  cout << "Which installment in a series is it? ";
+	  cin >> tempInt; // TODO: stop crash from non-number entry
       newAddVid = new Movie(tempInt);
    }	// if Movie
    else if (templine == "Television") { // season, episode, episodeDesc
@@ -131,7 +131,7 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
 	int currDir;
 	int currAct;
-	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
+	cout << "Name\t\t\tAudience Runtime Director\tActor" << endl;
 	for (int i = 0; i < videos.size(); ++i) {
 		videos.at(i)->display();
 		persons.at(directors.at(i).iPer).display(); // display the person in directors
@@ -525,7 +525,7 @@ int main(){
          }	// else
          actors.push_back(newLink);
      }   // while actor
-     
+	 
      while ((templine.find(released_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
          templine.erase(0, released_start.length());
@@ -580,6 +580,7 @@ int main(){
 	} // if help
 	else if (comm == "add") { // add new entry
 		addVideo(videos, persons);
+		cout << "Add sucessful." << endl;
 	}	// if add
 	else if (comm == "description search") {
 		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
@@ -596,12 +597,16 @@ int main(){
 		cout << "Enter something to search (be specific): ";
 		getline(cin, searchEntry);
 		matches = searchVideos(videos, searchEntry);
+		if (matches.size() == 0) {
+			cout << "No match found, try again." << endl;
+			continue; // return to top since no matches found
+		}
 		cout << "Do you want to change this (y/n)? " << endl;
 		videos.at(matches.at(0))->displayAll();
 		cout << endl;
 		cin >> templine;
 		if (templine == "n")
-			continue; // FIXME: goes to top?
+			continue;
 		else if (templine == "y") {
 			// do nothing
 		} // if y
