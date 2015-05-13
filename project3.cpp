@@ -256,7 +256,7 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any f
    for (i = 0; i < videos.size(); ++i) {
       // checks every field
       // cout << videos.at(i)->getName() << ' ' << endl;
-      if (videos.at(i)->Movie::searchTarget(target)) {
+      if (videos.at(i)->searchTarget(target)) {
          found = true;
          returnVector.push_back(i);
          videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
