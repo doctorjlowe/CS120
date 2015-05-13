@@ -76,18 +76,18 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
    newAddVid->setName(templine);
 
    // audience
-   cout << "What is the audience of the video? ";
+   cout << "What is the Audience of the video? ";
    cin >> templine;
    newAddVid->setAudience(templine);
 
    // location
-   cout << "What is the location of the video? ";
+   cout << "What is the Location of the video? ";
    cin.ignore();
    getline(cin, templine);
    newAddVid->setLocation(templine);
 
    // release date
-   cout << "What was its release date?" << endl << "Month: ";
+   cout << "What was its Release Date?" << endl << "Month: ";
    cin >> tempInt;
    cout << "Day: ";
    cin >> tempInt2;
@@ -110,13 +110,19 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
    cout << "Enter the director(s): "; // TODO: add multiple
    cin.ignore();
    getline(cin, templine);
-   people.push_back(templine); // adds a director to the people vector
+   if (!searchPeople(people, templine))
+	   people.push_back(templine); // add an actor to the people vector
+   else
+	   // TODO: link entry to existing actor
 
    // actors
    cout << "Enter the actor(s): "; // TODO: add multiple
    cin.ignore();
    getline(cin, templine);
-   people.push_back(templine); // add an actor to the people vector
+   if (!searchPeople(people, templine))
+		people.push_back(templine); // add an actor to the people vector
+   else
+	   // TODO: link entry to existing actor
    // TODO: alphabetize vector entry?
    videos.push_back(newAddVid); // if not, use this
 } // End addVideo
@@ -654,7 +660,24 @@ int main(){
 		}	// if matches
 	} // if remove
 	else if (comm == "save") {
-		// TODO: save list updates
+		ofstream out;
+		out.open("Videos.dat");
+		if (!out.is_open()) {
+			cout << "Unable to find file to save to." << endl;
+			return;
+		}
+		// FIXME: I expect it will delete the leading comments without proper precautions
+		for (i = 0; i < videos.size(); ++i) {
+			out << movie_start << endl;
+			out << "\t" << name_start << videos.at(i)->getName() << name_stop << endl;
+			out << "\t" << audience_start << videos.at(i)->getAudience() << audience_stop << endl;
+			out << "\t" << location_start << videos.at(i)->getLocation() << location_stop << endl;
+			out << "\t" << director_start << persons.at(i) << director_stop << endl; // TODO: change operator<< maybe?
+			// TODO: fit mulitple people
+			out << "\t" << actor_start << persons.at(directors.at(i).iPer) << actor_stop << endl;
+			out << "\t" << released_start << videos.at(i)->getReleased() << released_stop << endl;
+			out << movie_stop << endl;
+		}
 	} // if save
 	else if (comm == "search") { // search vectors for entries
 		cout << "Enter something to search: ";
