@@ -48,6 +48,7 @@ void Movie::displayAll() {
 
 bool Movie::searchTarget(string target) {
 	string ser = to_string(seriesNum);
+	cout << "name: " << getName() << " target: " << target << endl;
 	if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
 		|| name.find(target) != string::npos // search name
 		|| audience == target // if audience rating is equivalent

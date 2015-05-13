@@ -226,7 +226,7 @@ void remove(vector<Video*> &videos, vector<int> matches) {
 int searchPeople(vector<Person> &persons, Person target) {
    bool found = false;
    int i;
-   cout << "Searching..." << endl;
+   // cout << "Searching..." << endl;
    for (i = 0; i < persons.size(); ++i) {
       // checks every field
       if (persons.at(i).getFirstName() == target.getFirstName()) {
@@ -237,6 +237,7 @@ int searchPeople(vector<Person> &persons, Person target) {
             return i;
          }  // if last
       }  // if first
+      // note: deliberately only using two fields here now; more can be added if need be
       // else cout << persons.at(i).getFirstName() << ", " << target.getFirstName() << endl;
    }  // for
    // if no matches are found, print message
@@ -251,10 +252,11 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any f
    vector<int> returnVector; // remembers all indexes of matched search targets
    bool found = false;
    int i = 0;
-   cout << "Searching..." << endl;
+   cout << "Searching for ... " << target << endl;
    for (i = 0; i < videos.size(); ++i) {
       // checks every field
-      if (videos.at(i)->searchTarget(target)) {
+      // cout << videos.at(i)->getName() << ' ' << endl;
+      if (videos.at(i)->Movie::searchTarget(target)) {
          found = true;
          returnVector.push_back(i);
          videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
