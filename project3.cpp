@@ -523,7 +523,7 @@ int main(){
          }	// else
          actors.push_back(newLink);
      }   // while actor
-	 /*
+	 
      while ((templine.find(released_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
          templine.erase(0, released_start.length());
@@ -537,7 +537,7 @@ int main(){
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
          importVideo->setReleased(importDate);
      }   // while released
-      */
+      
       while ((templine.find(movie_stop)) < std::string::npos) {
          templine.erase(0, movie_stop.length());
          if (importKind != MOVIE) {
