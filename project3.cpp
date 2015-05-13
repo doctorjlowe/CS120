@@ -547,6 +547,7 @@ int main(){
 
          words = split(templine, ' ', nameVec);
 		 cout << importVideo->getName() << endl;
+		 cout << templine << endl;
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
