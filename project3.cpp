@@ -665,7 +665,7 @@ int main(){
 		out.open("Videos.dat");
 		if (!out.is_open()) {
 			cout << "Unable to find file to save to." << endl;
-			return;
+			continue; // TODO: WORKING? should stop save process
 		}
 		// FIXME: I expect it will delete the leading comments without proper precautions
 		for (i = 0; i < videos.size(); ++i) {
@@ -679,6 +679,7 @@ int main(){
 			out << "\t" << released_start << videos.at(i)->getReleased() << released_stop << endl;
 			out << movie_stop << endl;
 		}
+		out.close();
 	} // if save
 	else if (comm == "search") { // search vectors for entries
 		cout << "Enter something to search: ";
@@ -688,7 +689,7 @@ int main(){
 	else
 		cout << "Input not recognized.\n";
 	} while (comm != "quit"); // end loop
-	// continue to allow input until user enters 'q' (quit)
+	// continue to allow input until user enters "quit"
    
    #ifdef _WIN32
       system("pause");
