@@ -66,17 +66,22 @@ namespace Vids
 		string getMiddleName() const { return middleName; }
 		string getLineage() { return lineage; }
 		void setName(string name, int whichName) {
+			cout << "in setname\n";
 			if (whichName == 0) {
 				firstName = name;
+				cout << "setfirst\n";
 			}
 			else if (whichName == 1) {
 				lastName = name;
+				cout << "setlast\n";
 			}
 			else if (whichName == 2) {
 				middleName = name;
+				cout << "setmiddle\n";
 			}
 			else if (whichName == 3) {
 				lineage = name;
+				cout << "setlineage\n";
 			}
 			else
 				cout << "Error: setting new name." << endl;
