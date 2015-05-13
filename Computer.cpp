@@ -37,15 +37,6 @@ void Computer::displayAll() {
 	cout << "Audience: " << audience << endl;
 	cout << "Runtime Minutes: " << runtimeMinutes << endl;
 	cout << "Location: " << location << endl;
-
-	cout << "Director(s): ";
-	// TODO: print directors here?
-	cout << endl;
-
-	cout << "Actor(s): ";
-	// TODO: print actors here?
-	cout << endl;
-
 	cout << "Date Released: " << released;
 	cout << "Date Viewed: " << viewed;
 	cout << "Homepage: " << homepage << endl;

@@ -25,7 +25,7 @@ Movie::Movie() {
 
 Movie::Movie(unsigned int series) {
 	seriesNum = series;
-} // TODO: add parametized Video constructor
+}
 
 void Movie::display() { // order: name, audience, 1st director, 1st actor, runtime
 	string shortName = name;
@@ -42,15 +42,6 @@ void Movie::displayAll() {
 	cout << "Audience: " << audience << endl;
 	cout << "Runtime Minutes: " << runtimeMinutes << endl;
 	cout << "Location: " << location << endl;
-
-	cout << "Director(s): ";
-	// TODO: print directors
-	cout << endl;
-
-	cout << "Actor(s): ";
-	// TODO: print actors
-	cout << endl;
-
 	cout << "Date Released: " << released;
 	cout << "Date Viewed: " << viewed;
 }
