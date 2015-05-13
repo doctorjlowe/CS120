@@ -661,11 +661,15 @@ int main(){
 		   getline(cin, searchEntry);
 		   matches = searchVideos(videos, searchEntry);
 		   if (matches.size() != 0) { // if items were matched, then do the following
-			   remove(videos, matches);
-			   cout << "Items removed." << endl;
+			   cout << "Do you want to remove all of these results (y/n)? ";
+			   cin >> templine;
+			   if (templine == "y") {
+				   remove(videos, matches);
+				   cout << "Items removed." << endl;
+			   }
 		   }	// if matches
 	   } // if remove
-	   else if (comm == "save") {
+	   else if (comm == "save") { // NOT USABLE YET
 		   ofstream out;
 		   out.open("Videos.dat");
 		   if (!out.is_open()) {
