@@ -319,6 +319,7 @@ int main(){
    Link newLink;
    unsigned char words = 0;
    vector<string> nameVec;
+   vector<unsigned char> dateVec;
    int tempPerson, tempVideo;
    
    //cout << "What name should the Person File have?" << std::endl;
@@ -523,6 +524,20 @@ int main(){
          }	// else
          actors.push_back(newLink);
      }   // while actor
+     
+     while ((templine.find(released_start)) < std::string::npos) {
+         if (templine[0] == '\t') templine.erase(0, 1);
+         templine.erase(0, released_start.length());
+         stringPos = templine.find(released_stop);
+         if (stringPos < std::string::npos) {
+            templine.erase(stringPos, stringPos + released_stop.length()); }
+         words = split(templine, ' ', nameVec);
+         dateVec.at(0) = atoi(nameVec.at(0));
+         dateVec.at(1) = atoi(nameVec.at(1));
+         dateVec.at(2) = atoi(nameVec.at(2));
+         Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
+         importVideo->setReleased(importDate);
+     }   // while released
       
       while ((templine.find(movie_stop)) < std::string::npos) {
          templine.erase(0, movie_stop.length());
