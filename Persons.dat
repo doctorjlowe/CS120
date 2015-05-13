@@ -1,4 +1,4 @@
-Person	Adam		McKay	
+﻿Person	Adam		McKay	
 Person	Alan		Taylor	
 Person	Alfonso		Cuarón	
 Person	Baz		Luhrmann	
@@ -14,12 +14,15 @@ Person	David		Yates
 Person	David		Zucker	
 Person	Francis		Lawrence	
 Person	Gavin		Hood	
+Person	Goro	Taniguchi	
 Person	Guillermo	del	Toro	
 Person	Harold		Ramis	
+Person	Hayden	Walsh
 Person	J.	J.	Abrams	
 Person	James		Wan	
 Person	Jean-Marc		Vallée	
 Person	Jennifer		Lee	
+Person	Jeremy	Shada	
 Person	Jerry		Zucker	
 Person	Jim		Abrahams	
 Person	John		Hughes	
@@ -39,3 +42,6 @@ Person	Steve		McQueen
 Person	Terry		Jones	
 Person	Tom		Tykwer	
 Person	Wolfgang		Peterson	
+Person	Johnny	Yong	Bosch	
+Person	Yuri	Yowenthal	
+Person	Catbug	
