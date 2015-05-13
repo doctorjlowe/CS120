@@ -543,6 +543,7 @@ int main(){
 		cout << "edit = edit an existing entry" << endl;
 		cout << "loan = edit the location of an entry" << endl;
 		cout << "remove = remove an item from the list" << endl;
+		cout << "people = display entire list of Persons" << endl;
 		cout << "print = print entire list of Videos" << endl;
 		cout << "quit = quit program" << endl;
 		cout << "save = save changes to list of Videos to external file" << endl;
@@ -598,6 +599,11 @@ int main(){
 		cout << "actor - ex. Cruise or Tom Cruise" << endl;
 		cout << "runtime minutes - 135 or 60" << endl;
 	}
+   else if (comm == "people") { // print persons
+      for (i = 0; i < persons.size(); ++i) {
+      	cout << persons.at(i).getFirstName() << endl;
+      }	// for
+   }	// people
 	else if (comm == "print") { // print videos
 		display(videos, persons, directors, actors); // FIXME: working?
 	}
