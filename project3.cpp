@@ -532,6 +532,7 @@ int main(){
    videoReader.close(); // close input file
 
 	do {
+		cout << endl;
 	cout << "Enter a command (help = command list): ";
 	getline(cin, comm); // choice of command
 	
