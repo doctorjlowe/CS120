@@ -50,7 +50,7 @@ void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &dire
 	}
 }	// display
 
-vector<int> searchVideos(vector<Video*> &videos, string target) {
+vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any found matches
    vector<int> returnVector; // remembers all indexes of matched search targets
    bool found = false;
    int i = 0;
@@ -67,7 +67,7 @@ vector<int> searchVideos(vector<Video*> &videos, string target) {
    if (!found)
       cout << "No matches found for this video." << endl;
    return returnVector;
-} // print any found matches
+} // searchVideos
 
 int searchPeople(vector<Person> &persons, Person target) {
    bool found = false;
@@ -91,7 +91,7 @@ int searchPeople(vector<Person> &persons, Person target) {
    	i = -1;
    }	// if
    return i;
-}
+}	// searchPeople
 
 void addVideo(vector<Video*> &videos, vector<Person> &people) {
    Video* newAddVid;
@@ -109,26 +109,25 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
       cout << "Which installment in a series is it? ";
       cin >> tempInt;
       newAddVid = new Movie(tempInt);
-   }
+   }	// if Movie
    else if (templine == "Television") { // season, episode, episodeDesc
       cout << "How many seasons are in it? ";
       cin >> tempInt;
       cout << "How many episodes are in each season? ";
       cin >> tempInt2;
       newAddVid = new Television(tempInt, tempInt2);
-   }
+   }	// if Television
    else if (templine == "Computer") {
       cout << "What is the homepage (Enter nothing to skip)? ";
       cin >> templine;
       cout << "What is the source of the video (domain)? ";
       cin >> templine2;
       newAddVid = new Computer(templine, templine2);
-   }
+   }	// if Computer
    else {
       cout << "Not a valid type.";
       return; // TODO: should reprint first message
-   }
-   // end ifs
+   }	// else - end of type ifs
 
    // name
    cout << "What is the Name of the video? ";
@@ -199,25 +198,25 @@ void editVideo(Video* &vid, vector<Person> &persons, string field) {
 			if (j == -1) { // if searchPeople did not find the person, add them
 				persons.push_back(entry);
 				// TODO: link in actors and directors
-			}
+			}	// if
 			else {
 				// TODO: link in actors and directors
-			}
-		}
-	}
+			}	// else
+		}	// for
+	}	// if
 
 	cout << "Enter new " << field << ": ";
 	getline(cin, entry);
 
 	if (field == "name") {
 		vid->setName(entry);
-	}
+	}	// if name
 	else if (field == "audience") {
 		vid->setAudience(entry);
-	}
+	}	// if audience
 	else if (field == "location") {
 		vid->setLocation(entry);
-	}
+	}	// if location
 	else if (field == "actors") {
 		cout << "Enter number of actors: ";
 		cin >> n;
@@ -226,8 +225,8 @@ void editVideo(Video* &vid, vector<Person> &persons, string field) {
 			getline(cin, entry);
 			if (searchPeople(persons, entry) != -1) // if the entry is not found in persons, add it
 				persons.push_back(entry);
-		}
-	}
+		}	// for
+	}	// if actors
 	else if (field == "released") {
 		cout << "Enter new Month: ";
 		cin >> m;
@@ -237,7 +236,7 @@ void editVideo(Video* &vid, vector<Person> &persons, string field) {
 		cin >> y;
 		Date newDate(y, m, d);
 		vid->setReleased(newDate);
-	}
+	}	// if released
 	else if (field == "viewed") {
 		cout << "Enter new Month: ";
 		cin >> m;
@@ -247,23 +246,23 @@ void editVideo(Video* &vid, vector<Person> &persons, string field) {
 		cin >> y;
 		Date newDate(y, m, d);
 		vid->setViewed(newDate);
-	}
+	}	// if viewed
 	else if (field == "runtime") {
 		cout << "Enter new runtime: ";
 		cin >> n;
 		vid->setRuntimeMinutes(n);
-	}
+	}	// if runtime
 	else {
 		cout << "Error: this is not a valid field choice." << endl;
-	}
-}
+	}	// else invalid field
+}	// editVideo
 
 // removes any matched items from the videos vector
 void remove(vector<Video*> &videos, vector<int> matches) {
    for (int i = 0; i < matches.size(); ++i) {
       videos.erase(videos.begin() + matches.at(i)); // should erase any matched items from the vector
-   }
-}
+   }	// for
+}	// remove
 
 unsigned char split (const string& s, char c, vector<string>& v) {
    string::size_type i = 0;
