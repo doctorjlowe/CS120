@@ -30,69 +30,6 @@ struct Link {
    char iPer;
 };
 
-void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
-	int j = 0; // counts unevenly through directors
-	int k = 0; // counts unevenly through actors
-	int currDir;
-	int currAct;
-	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
-	for (int i = 0; i < videos.size(); ++i) {
-		videos.at(i)->display();
-		while (directors.at(j).iMov == i) { // while directors.iMov is the same index as i
-			persons.at(directors.at(j).iPer).display(); // display the person in directors
-			j++;
-		}
-		while (actors.at(k).iMov == i) { // while actors.iMov is the same index as i
-			persons.at(directors.at(k).iPer).display(); // display the person in actors
-			k++;
-		}
-		cout << endl;
-	}
-}	// display
-
-vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any found matches
-   vector<int> returnVector; // remembers all indexes of matched search targets
-   bool found = false;
-   int i = 0;
-   cout << "Searching..." << endl;
-   for (i = 0; i < videos.size(); ++i) {
-      // checks every field
-      if (videos.at(i)->searchTarget(target)) {
-         found = true;
-         returnVector.push_back(i);
-         videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
-      }  // if
-   }  // for
-   // if no matches are found, print message
-   if (!found)
-      cout << "No matches found for this video." << endl;
-   return returnVector;
-} // searchVideos
-
-int searchPeople(vector<Person> &persons, Person target) {
-   bool found = false;
-   int i;
-   cout << "Searching..." << endl;
-   for (i = 0; i < persons.size(); ++i) {
-      // checks every field
-      if (persons.at(i).getFirstName() == target.getFirstName()) {
-         //cout << "First match" << endl;
-         if (persons.at(i).getLastName() == target.getLastName()) {
-            //cout << "Last match" << endl;
-            found = true;
-            return i;
-         }  // if last
-      }  // if first
-      // else cout << persons.at(i).getFirstName() << ", " << target.getFirstName() << endl;
-   }  // for
-   // if no matches are found, print message
-   if (!found) {
-      cout << "No matches found for this person." << endl;
-   	i = -1;
-   }	// if
-   return i;
-}	// searchPeople
-
 void addVideo(vector<Video*> &videos, vector<Person> &people) {
    Video* newAddVid;
    vector<Person> addDirectors;
@@ -181,6 +118,26 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
    videos.push_back(newAddVid); // if not, use this
 } // End addVideo
 
+void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
+	int j = 0; // counts unevenly through directors
+	int k = 0; // counts unevenly through actors
+	int currDir;
+	int currAct;
+	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
+	for (int i = 0; i < videos.size(); ++i) {
+		videos.at(i)->display();
+		while (directors.at(j).iMov == i) { // while directors.iMov is the same index as i
+			persons.at(directors.at(j).iPer).display(); // display the person in directors
+			j++;
+		}
+		while (actors.at(k).iMov == i) { // while actors.iMov is the same index as i
+			persons.at(directors.at(k).iPer).display(); // display the person in actors
+			k++;
+		}
+		cout << endl;
+	}
+}	// display
+
 // video to be edited (from vector), whole vector of People, designated field to search
 void editVideo(Video* &vid, vector<Person> &persons, string field) {
 	string entry;
@@ -263,6 +220,49 @@ void remove(vector<Video*> &videos, vector<int> matches) {
       videos.erase(videos.begin() + matches.at(i)); // should erase any matched items from the vector
    }	// for
 }	// remove
+
+int searchPeople(vector<Person> &persons, Person target) {
+   bool found = false;
+   int i;
+   cout << "Searching..." << endl;
+   for (i = 0; i < persons.size(); ++i) {
+      // checks every field
+      if (persons.at(i).getFirstName() == target.getFirstName()) {
+         //cout << "First match" << endl;
+         if (persons.at(i).getLastName() == target.getLastName()) {
+            //cout << "Last match" << endl;
+            found = true;
+            return i;
+         }  // if last
+      }  // if first
+      // else cout << persons.at(i).getFirstName() << ", " << target.getFirstName() << endl;
+   }  // for
+   // if no matches are found, print message
+   if (!found) {
+      cout << "No matches found for this person." << endl;
+   	i = -1;
+   }	// if
+   return i;
+}	// searchPeople
+
+vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any found matches
+   vector<int> returnVector; // remembers all indexes of matched search targets
+   bool found = false;
+   int i = 0;
+   cout << "Searching..." << endl;
+   for (i = 0; i < videos.size(); ++i) {
+      // checks every field
+      if (videos.at(i)->searchTarget(target)) {
+         found = true;
+         returnVector.push_back(i);
+         videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
+      }  // if
+   }  // for
+   // if no matches are found, print message
+   if (!found)
+      cout << "No matches found for this video." << endl;
+   return returnVector;
+} // searchVideos
 
 unsigned char split (const string& s, char c, vector<string>& v) {
    string::size_type i = 0;
