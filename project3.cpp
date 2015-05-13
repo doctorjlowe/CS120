@@ -329,8 +329,8 @@ int main(){
    Video* importVideo = NULL;
    Link newLink;
    unsigned char words = 0;
-   vector<string> nameVec;
-   vector<unsigned char> dateVec;
+   vector<string> nameVec (4);
+   vector<unsigned char> dateVec(3);
    int tempPerson, tempVideo;
    
    //cout << "What name should the Person File have?" << std::endl;
@@ -585,7 +585,7 @@ int main(){
          }	// else
          actors.push_back(newLink);
      }   // while actor
-	 /*
+	 
      while ((templine.find(released_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
          templine.erase(0, released_start.length());
@@ -593,13 +593,19 @@ int main(){
          if (stringPos < std::string::npos) {
             templine.erase(stringPos, stringPos + released_stop.length()); }
          words = split(templine, ' ', nameVec);
+		// cout << "split\n";
          dateVec.at(0) = atoi(nameVec.at(0).c_str());
+	//	 cout << "datv1\n";
          dateVec.at(1) = atoi(nameVec.at(1).c_str());
+		// cout << "datev2\n";
          dateVec.at(2) = atoi(nameVec.at(2).c_str());
+		 //cout << "datev3\n";
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
+		 //cout << "import\n";
          importVideo->setReleased(importDate);
+		// cout << "import2\n";
      }   // while released
-      */
+      
       while ((templine.find(movie_stop)) < std::string::npos) {
          templine.erase(0, movie_stop.length());
          if (importKind != MOVIE) {
