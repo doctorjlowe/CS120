@@ -317,6 +317,7 @@ int main(){
    Link newLink;
    unsigned char words = 0;
    vector<string> nameVec;
+   int tempPerson, tempVideo;
    
    //cout << "What name should the Person File have?" << std::endl;
    //cin >> person_file_name;
@@ -609,6 +610,20 @@ int main(){
 	else if (comm == "print") { // print videos
 		display(videos, persons, directors, actors); // FIXME: working?
 	}	// if print
+	else if (comm == "actors") { // print link table
+      for (i = 0; i < actors.size(); ++i) {
+      	tempVideo = actors.at(i).iMov;
+      	tempPerson = actors.at(i).iPer;
+      	cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
+      } // for
+	}	// if actors
+	else if (comm == "directors") { // print link table
+      for (i = 0; i < directors.size(); ++i) {
+      	tempVideo = directors.at(i).iMov;
+      	tempPerson = directors.at(i).iPer;
+      	cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
+      } // for
+	}	// if directors
 	else if (comm == "quit") {
 		break; // quit program
 	}	// if quit
@@ -620,7 +635,7 @@ int main(){
 			remove(videos, matches);
 			cout << "Items removed." << endl;
 		}	// if matches
-	} if remove
+	} // if remove
 	else if (comm == "save") {
 		// TODO: save list updates
 	} // if save
