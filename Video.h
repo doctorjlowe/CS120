@@ -44,7 +44,7 @@ namespace Vids
 			Video(string name, string audience, string location, Date released);
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object
-			bool searchTarget(string target) { return 0; } // TODO: used to search additonal fields in derived classes
+			bool searchTarget(string target) { return 0; } // used to search additonal fields in derived classes
 			string getRuntimeMinutes() const { return to_string(runtimeMinutes); } // returns in string, more utility this way
 			string getName() const { return name; }
 			string getAudience() const { return audience; }

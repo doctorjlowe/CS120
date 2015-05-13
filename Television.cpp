@@ -55,15 +55,6 @@ void Television::displayAll() {
 	cout << "Total Seasons: " << season << endl;
 	cout << "Episodes per Season: " << episode << endl;
 	cout << "Location: " << location << endl;
-
-	cout << "Director(s): ";
-	// TODO: print directors here?
-	cout << endl;
-
-	cout << "Actor(s): ";
-	// print actors here?
-	cout << endl;
-
 	cout << "Date Released: " << released;
 	cout << "Date Viewed: " << viewed;
 }	// displayAll

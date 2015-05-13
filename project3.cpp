@@ -599,8 +599,9 @@ int main(){
 			continue;
 		} // else
 		if (comm == "edit") {
+			cout << "Now choose a field to edit -" << endl;
+			cout << "Name, Audience, Location, release date, viewed date, runtime minutes." << endl;
 			cout << "Choose a field to edit: ";
-			// TODO: print field names
 			cin >> templine;
 			editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
 		}	// if edit	
@@ -624,7 +625,7 @@ int main(){
       }	// for
    }	// people
 	else if (comm == "print") { // print videos
-		display(videos, persons, directors, actors); // FIXME: working?
+		display(videos, persons, directors, actors);
 	}	// if print
 	else if (comm == "actors") { // print link table
       for (i = 0; i < actors.size(); ++i) {

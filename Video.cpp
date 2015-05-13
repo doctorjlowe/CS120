@@ -19,10 +19,9 @@ namespace Vids
 {
 	Video::Video(){
 		runtimeMinutes = 0;
-		name = "";
-		audience = "";
-		location = "";
-		// TODO: add custom class defaults?
+		name = "*No Title*";
+		audience = "*";
+		location = "*No location*";
 	}
 	Video::Video(string name, string audience, string location, Date released) {
 		this->name = name;

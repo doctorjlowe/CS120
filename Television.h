@@ -22,7 +22,7 @@ public:
 	Television(unsigned int season, unsigned int episode);
 	unsigned int getSeason() const { return season; }
 	unsigned int getEpisode() const { return episode; }
-	bool searchTarget(string target); // TODO: used to search additonal fields in derived classes
+	bool searchTarget(string target); // used to search data members
 	// prints description of specific episode; must pass in index of season and episode
 	bool searchDesc(string target); // searches descriptions of episodes
 	void printDesc(int s, int e) { cout << episodeDesc.at(s * episode + e) << endl; }

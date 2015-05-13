@@ -26,7 +26,7 @@ public:
 	string getHomepage() const { return homepage; }
 	void setSource(string s) { source = s; }
 	void setHomepage(string h) { homepage = h; }
-	bool searchTarget(string target); // TODO: used to search additonal fields in derived classes
+	bool searchTarget(string target); // used to search data members
 
 	void display();
 	void displayAll();
