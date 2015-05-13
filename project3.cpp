@@ -254,7 +254,7 @@ vector<int> searchVideos(const vector<Video*> &videos, string target) {	// print
    cout << "Searching..." << endl;
    for (i = 0; i < videos.size(); ++i) {
       // checks every field
-	  if (videos.at(i)->searchTarget(target)) { // FIXME: is calling in scope of Video not derived class
+	  if (videos.at(i)->searchTarget(target)) {
 		  found = true;
          returnVector.push_back(i);
          videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
@@ -523,7 +523,7 @@ int main(){
          }	// else
          actors.push_back(newLink);
      }   // while actor
-	 
+	 /*
      while ((templine.find(released_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
          templine.erase(0, released_start.length());
@@ -537,7 +537,7 @@ int main(){
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
          importVideo->setReleased(importDate);
      }   // while released
-      
+      */
       while ((templine.find(movie_stop)) < std::string::npos) {
          templine.erase(0, movie_stop.length());
          if (importKind != MOVIE) {
