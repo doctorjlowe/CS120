@@ -18,6 +18,11 @@ We hereby certify that this program is entirely our own work.
 using namespace std;
 using namespace Vids;
 
+Computer::Computer() {
+	homepage = "";
+	source = "";
+}
+
 Computer::Computer(string homepage, string source) {
 	this->homepage = homepage;
 	this->source = source;

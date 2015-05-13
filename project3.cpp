@@ -401,6 +401,12 @@ int main(){
 		  importKind = TELEVISION;
 		  importVideo = new Television;
 	  }  // while television start
+
+	  while ((templine.find(computer_start)) < std::string::npos) {
+		  templine.erase(0, computer_start.length());
+		  importKind = COMPUTER;
+		  importVideo = new Computer;
+	  }  // while computer start
       
       while ((templine.find(name_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
@@ -485,6 +491,7 @@ int main(){
          'del' or 'van' will be split with the first part being counted as
          a middle name.  This will be a problem if such a person does have
          a last name. */
+		 cout << templine;
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
@@ -539,6 +546,7 @@ int main(){
            templine.erase(stringPos, stringPos + actor_stop.length()); }
 
          words = split(templine, ' ', nameVec);
+		 cout << importVideo->getName() << endl;
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
@@ -616,6 +624,28 @@ int main(){
             videos.push_back(importVideo);
          }  // else
       }  // while movie stop
+
+	  while ((templine.find(tv_stop)) < std::string::npos) {
+		  templine.erase(0, tv_stop.length());
+		  if (importKind != TELEVISION) {
+			  cout << "Wrong importKind" << endl;
+			  break;
+		  }  // if
+		  else {
+			  videos.push_back(importVideo);
+		  }  // else
+	  }  // while tv stop
+
+	  while ((templine.find(computer_stop)) < std::string::npos) {
+		  templine.erase(0, computer_stop.length());
+		  if (importKind != COMPUTER) {
+			  cout << "Wrong importKind" << endl;
+			  break;
+		  }  // if
+		  else {
+			  videos.push_back(importVideo);
+		  }  // else
+	  }  // while computer stop
      i++; // increment index store for actors and directors vectors
    }  // while !videoReader.eof()
    
