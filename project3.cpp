@@ -30,6 +30,9 @@ struct Link {
    char iPer;
 };
 
+int searchPeople(vector<Person> &persons, Person target);
+// pre-declare this one since it's needed by others
+
 void addVideo(vector<Video*> &videos, vector<Person> &people) {
    Video* newAddVid;
    vector<Person> addDirectors;
