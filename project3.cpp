@@ -545,12 +545,14 @@ int main(){
 		cout << "remove = remove an item from the list" << endl;
 		cout << "people = display entire list of Persons" << endl;
 		cout << "print = print entire list of Videos" << endl;
+		cout << "actors = display actor link table" << endl;
+		cout << "directors = display director link table" << endl;
 		cout << "quit = quit program" << endl;
 		cout << "save = save changes to list of Videos to external file" << endl;
-	}
+	} // if help
 	else if (comm == "add") { // add new entry
 		addVideo(videos, persons);
-	}
+	}	// if add
 	else if (comm == "description search") {
 		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
 		getline(cin, searchEntry);
@@ -558,8 +560,8 @@ int main(){
 			if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
 				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
 					videos.at(i)->displayAll();
-			}
-		}
+			}	// if typeid
+		} // for
 		// TODO: else, print error message
 	}
 	else if (comm == "edit" || comm == "loan") {
@@ -574,21 +576,21 @@ int main(){
 			continue; // FIXME: goes to top?
 		else if (templine == "y") {
 			// do nothing
-		}
+		} // if y
 		else {
 			cout << "not a valid choice" << endl;
 			continue;
-		}
+		} // else
 		if (comm == "edit") {
 			cout << "Choose a field to edit: ";
 			// TODO: print field names
 			cin >> templine;
 			editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
-		}	
+		}	// if edit	
 		else if (comm == "loan")
 			editVideo(videos.at(matches.at(0)), persons, "location");
 		cout << "Update sucessful." << endl; // FIXME: working?
-	}
+	} // if edit || loan
 	else if (comm == "help search") {
 		cout << "Fields and format of entry while searching:" << endl;
 		cout << "name - Movie Title Case Sensative" << endl;
@@ -598,7 +600,7 @@ int main(){
 		cout << "director - ex. Jackson or Peter Jackson" << endl;
 		cout << "actor - ex. Cruise or Tom Cruise" << endl;
 		cout << "runtime minutes - 135 or 60" << endl;
-	}
+	}	// if help search
    else if (comm == "people") { // print persons
       for (i = 0; i < persons.size(); ++i) {
       	cout << persons.at(i).getFirstName() << endl;
@@ -606,10 +608,10 @@ int main(){
    }	// people
 	else if (comm == "print") { // print videos
 		display(videos, persons, directors, actors); // FIXME: working?
-	}
+	}	// if print
 	else if (comm == "quit") {
 		break; // quit program
-	}
+	}	// if quit
 	else if (comm == "remove") {
 		cout << "Enter something to remove: ";
 		getline(cin, searchEntry);
@@ -617,16 +619,16 @@ int main(){
 		if (matches.size() != 0) { // if items were matched, then do the following
 			remove(videos, matches);
 			cout << "Items removed." << endl;
-		}
-	}
+		}	// if matches
+	} if remove
 	else if (comm == "save") {
 		// TODO: save list updates
-	}
+	} // if save
 	else if (comm == "search") { // search vectors for entries
 		cout << "Enter something to search: ";
 		getline(cin, searchEntry);
 		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
-	}
+	}	// if search
 	else
 		cout << "Input not recognized.\n";
 	} while (comm != "quit"); // end loop
