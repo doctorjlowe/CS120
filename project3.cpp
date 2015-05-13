@@ -131,11 +131,11 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
 	int currDir;
 	int currAct;
-	cout << "Name\t\t\tAudience Runtime Director\tActor" << endl;
+	cout << "Name\t\t\tAudience Director\tActor" << endl;
 	for (int i = 0; i < videos.size(); ++i) {
 		videos.at(i)->display();
 		persons.at(directors.at(i).iPer).display(); // display the person in directors
-		persons.at(directors.at(i).iPer).display(); // display the person in actors
+		persons.at(actors.at(i).iPer).display(); // display the person in actors
 		cout << endl;
 	}
 }	// display
@@ -500,7 +500,7 @@ int main(){
                newPerson.setName(nameVec.at(1), 1);
                cout << "Last: " << nameVec.at(1) << endl;
                break;
-            case 3:
+			case 3:
             /* note that there is no simple way to detect a person with 
             lineage but no middle name. */
                newPerson.setName(nameVec.at(1), 2);
