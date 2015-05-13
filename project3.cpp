@@ -122,21 +122,13 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 } // End addVideo
 
 void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
-	int j = 0; // counts unevenly through directors
-	int k = 0; // counts unevenly through actors
 	int currDir;
 	int currAct;
 	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
 	for (int i = 0; i < videos.size(); ++i) {
 		videos.at(i)->display();
-		while (directors.at(j).iMov == i) { // while directors.iMov is the same index as i
-			persons.at(directors.at(j).iPer).display(); // display the person in directors
-			j++;
-		}
-		while (actors.at(k).iMov == i) { // while actors.iMov is the same index as i
-			persons.at(directors.at(k).iPer).display(); // display the person in actors
-			k++;
-		}
+		persons.at(directors.at(i).iPer).display(); // display the person in directors
+		persons.at(directors.at(i).iPer).display(); // display the person in actors
 		cout << endl;
 	}
 }	// display
@@ -555,6 +547,7 @@ int main(){
    videoReader.close(); // close input file
 
 	do {
+		cout << endl;
 	cout << "Enter a command (help = command list): ";
 	getline(cin, comm); // choice of command
 	
