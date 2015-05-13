@@ -30,9 +30,25 @@ struct Link {
    char iPer;
 };
 
-void display(vector<Video*> &videos) { // displays all objects in vector
-   for (int i = 0; i < videos.size(); ++i) { videos.at(i)->display(); }
-}  // display
+void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
+	int j = 0; // counts unevenly through directors
+	int k = 0; // counts unevenly through actors
+	int currDir;
+	int currAct;
+	cout << "Name\tAudience\tRuntime\tDirector\tActor" << endl;
+	for (int i = 0; i < videos.size(); ++i) {
+		videos.at(i)->display();
+		while (directors.at(j).iMov == i) { // while directors.iMov is the same index as i
+			persons.at(directors.at(j).iPer).display(); // display the person in directors
+			j++;
+		}
+		while (actors.at(k).iMov == i) { // while actors.iMov is the same index as i
+			persons.at(directors.at(k).iPer).display(); // display the person in actors
+			k++;
+		}
+		cout << endl;
+	}
+}	// display
 
 vector<int> searchVideos(vector<Video*> &videos, string target) {
    vector<int> returnVector; // remembers all indexes of matched search targets
@@ -168,91 +184,78 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 
 // video to be edited (from vector), whole vector of People, designated field to search
 void editVideo(Video* &vid, vector<Person> &persons, string field) {
-   string entry;
-   unsigned int n;
-   unsigned short m, d, y;
-   string first;
-   string last;
-   string middle;
-   string line;
-   
-   if (field == "name") {
-      cout << "Enter new name: ";
-      getline(cin, entry);
-      vid->setName(entry);
-   }
-   else if (field == "audience") {
-      cout << "Enter new audience: ";
-      getline(cin, entry);
-      vid->setAudience(entry);
-   }
-   else if (field == "location") {
-      cout << "Enter a new location: ";
-      getline(cin, entry);
-      vid->setLocation(entry);
-   }
-   else if (field == "directors") {
-      cout << "Enter number of directors: ";
-      cin >> n;
-      for (int i = 0; i < n; ++i) {
-         cout << "Enter director's first name: ";
-         getline(cin, first);
-         cout << "Enter director's middle name: ";
-         getline(cin, middle);
-         cout << "Enter director's last name: ";
-         getline(cin, last);
-         cout << "Enter director's lineage: ";
-         getline(cin, line);
-         Person newPerson(first, last, middle, line);
-         if (searchPeople(persons, newPerson) != -1) // if the entry is not found in persons, add it
-            persons.push_back(newPerson);
-      }
-   }
-   else if (field == "actors") {
-      cout << "Enter number of actors: ";
-      cin >> n;
-      for (int i = 0; i < n; ++i) {
-         cout << "Enter actor's first name: ";
-         getline(cin, first);
-         cout << "Enter actor's middle name: ";
-         getline(cin, middle);
-         cout << "Enter actor's last name: ";
-         getline(cin, last);
-         cout << "Enter actor's lineage: ";
-         getline(cin, line);
-         Person newPerson(first, last, middle, line);
-         if (searchPeople(persons, newPerson) != -1) // if the entry is not found in persons, add it
-            persons.push_back(newPerson);
-      }
-   }
-   else if (field == "released") {
-      cout << "Enter new Month: ";
-      cin >> m;
-      cout << "Enter new Day: ";
-      cin >> d;
-      cout << "Enter new Year: ";
-      cin >> y;
-      Date newDate(y, m, d);
-      vid->setReleased(newDate);
-   }
-   else if (field == "viewed") {
-      cout << "Enter new Month: ";
-      cin >> m;
-      cout << "Enter new Day: ";
-      cin >> d;
-      cout << "Enter new Year: ";
-      cin >> y;
-      Date newDate(y, m, d);
-      vid->setViewed(newDate);
-   }
-   else if (field == "runtime") {
-      cout << "Enter new runtime: ";
-      cin >> n;
-      vid->setRuntimeMinutes(n);
-   }
-   else {
-      cout << "Error: this is not a valid field choice." << endl;
-   }
+	string entry;
+	unsigned int n;
+	int j = 0;
+	unsigned short m, d, y;
+
+	if (field == "directors" || field == "actors") {
+		cout << "Enter number of " << field << ": ";
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cout << "Enter " << field.substr(0, field.length() - 1) << ": ";
+			getline(cin, entry);
+			m = searchPeople(persons, entry);
+			if (j == -1) { // if searchPeople did not find the person, add them
+				persons.push_back(entry);
+				// TODO: link in actors and directors
+			}
+			else {
+				// TODO: link in actors and directors
+			}
+		}
+	}
+
+	cout << "Enter new " << field << ": ";
+	getline(cin, entry);
+
+	if (field == "name") {
+		vid->setName(entry);
+	}
+	else if (field == "audience") {
+		vid->setAudience(entry);
+	}
+	else if (field == "location") {
+		vid->setLocation(entry);
+	}
+	else if (field == "actors") {
+		cout << "Enter number of actors: ";
+		cin >> n;
+		for (int i = 0; i < n; ++i) {
+			cout << "Enter actor: ";
+			getline(cin, entry);
+			if (searchPeople(persons, entry) != -1) // if the entry is not found in persons, add it
+				persons.push_back(entry);
+		}
+	}
+	else if (field == "released") {
+		cout << "Enter new Month: ";
+		cin >> m;
+		cout << "Enter new Day: ";
+		cin >> d;
+		cout << "Enter new Year: ";
+		cin >> y;
+		Date newDate(y, m, d);
+		vid->setReleased(newDate);
+	}
+	else if (field == "viewed") {
+		cout << "Enter new Month: ";
+		cin >> m;
+		cout << "Enter new Day: ";
+		cin >> d;
+		cout << "Enter new Year: ";
+		cin >> y;
+		Date newDate(y, m, d);
+		vid->setViewed(newDate);
+	}
+	else if (field == "runtime") {
+		cout << "Enter new runtime: ";
+		cin >> n;
+		vid->setRuntimeMinutes(n);
+	}
+	else {
+		cout << "Error: this is not a valid field choice." << endl;
+	}
 }
 
 // removes any matched items from the videos vector
@@ -525,107 +528,101 @@ int main(){
    
    videoReader.close(); // close input file
 
-   do {
-   cout << "Enter a command (help = command list): ";
-   getline(cin, comm); // choice of command
-   
-   if (comm == "help") { // help/display command list
-      cout << "COMMANDS:" << endl;
-      cout << "help search = gives format for search entries" << endl;
-      cout << "search = search document for a given entry" << endl;
-      cout << "description search = search Television episode descriptions" << endl;
-      cout << "add = add a new entry to list" << endl;
-      cout << "edit = edit an existing entry" << endl;
-      cout << "loan = edit the location of an entry" << endl;
-      cout << "people = show list of people" << endl;
-      cout << "remove = remove an item from the list" << endl;
-      cout << "print = print entire list of Videos" << endl;
-      cout << "quit = quit program" << endl;
-      cout << "save = save changes to list of Videos to external file" << endl;
-   }
-   else if (comm == "add") { // add new entry
-      addVideo(videos, persons);
-   }
-   else if (comm == "description search") {
-      cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
-      getline(cin, searchEntry);
-      for (i = 0; i < videos.size(); ++i) {
-         if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
-            if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
-               videos.at(i)->displayAll();
-         }
-      }
-      // TODO: else, print error message
-   }
-   else if (comm == "edit" || comm == "loan") {
-      cout << "Enter something to search (be specific): ";
-      getline(cin, searchEntry);
-      matches = searchVideos(videos, searchEntry);
-      cout << "Do you want to change this (y/n)? " << endl;
-      videos.at(matches.at(0))->displayAll();
-      cout << endl;
-      cin >> templine;
-      if (templine == "n")
-         continue; // FIXME: goes to top?
-      else if (templine == "y") {
-         // do nothing
-      }
-      else {
-         cout << "not a valid choice" << endl;
-         continue;
-      }
-      if (comm == "edit") {
-         cout << "Choose a field to edit: ";
-         // TODO: print field names
-         cin >> templine;
-         editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
-      }  
-      else if (comm == "loan")
-         editVideo(videos.at(matches.at(0)), persons, "location");
-      cout << "Update sucessful." << endl; // FIXME: working?
-   }
-   else if (comm == "help search") {
-      cout << "Fields and format of entry while searching:" << endl;
-      cout << "name - Movie Title Case Sensative" << endl;
-      cout << "date - mm/dd/yy (leading zeros required)" << endl;
-      cout << "audience - G or PG or PG-13 or R" << endl;
-      cout << "location - ex. Bill's House or Garage" << endl;
-      cout << "director - ex. Jackson or Peter Jackson" << endl;
-      cout << "actor - ex. Cruise or Tom Cruise" << endl;
-      cout << "runtime minutes - 135 or 60" << endl;
-   }
-   else if (comm == "people") { // print persons
-      for (i = 0; i < persons.size(); ++i) {
-      	cout << persons.at(i).getFirstName() << endl;
-      }	// for
-   }	// people
-   else if (comm == "print") { // print videos
-      display(videos); // FIXME: working?
-   }
-   else if (comm == "quit") {
-      break; // quit program
-   }
-   else if (comm == "remove") {
-      cout << "Enter something to remove: ";
-      getline(cin, searchEntry);
-      matches = searchVideos(videos, searchEntry);
-      if (matches.size() != 0) { // if items were matched, then do the following
-         remove(videos, matches);
-         cout << "Items removed." << endl;
-      }
-   }
-   else if (comm == "save") {
-      // TODO: save list updates
-   }
-   else if (comm == "search") { // search vectors for entries
-      cout << "Enter something to search: ";
-      getline(cin, searchEntry);
-      searchVideos(videos, searchEntry); // search videos vector for the searchEntry
-   }
-   else
-      cout << "Input not recognized.\n";
-   } while (comm != "quit"); // end loop
-   // continue to allow input until user enters 'q' (quit)
+	do {
+	cout << "Enter a command (help = command list): ";
+	getline(cin, comm); // choice of command
+	
+	if (comm == "help") { // help/display command list
+		cout << "COMMANDS:" << endl;
+		cout << "help search = gives format for search entries" << endl;
+		cout << "search = search document for a given entry" << endl;
+		cout << "description search = search Television episode descriptions" << endl;
+		cout << "add = add a new entry to list" << endl;
+		cout << "edit = edit an existing entry" << endl;
+		cout << "loan = edit the location of an entry" << endl;
+		cout << "remove = remove an item from the list" << endl;
+		cout << "print = print entire list of Videos" << endl;
+		cout << "quit = quit program" << endl;
+		cout << "save = save changes to list of Videos to external file" << endl;
+	}
+	else if (comm == "add") { // add new entry
+		addVideo(videos, persons);
+	}
+	else if (comm == "description search") {
+		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
+		getline(cin, searchEntry);
+		for (i = 0; i < videos.size(); ++i) {
+			if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
+				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
+					videos.at(i)->displayAll();
+			}
+		}
+		// TODO: else, print error message
+	}
+	else if (comm == "edit" || comm == "loan") {
+		cout << "Enter something to search (be specific): ";
+		getline(cin, searchEntry);
+		matches = searchVideos(videos, searchEntry);
+		cout << "Do you want to change this (y/n)? " << endl;
+		videos.at(matches.at(0))->displayAll();
+		cout << endl;
+		cin >> templine;
+		if (templine == "n")
+			continue; // FIXME: goes to top?
+		else if (templine == "y") {
+			// do nothing
+		}
+		else {
+			cout << "not a valid choice" << endl;
+			continue;
+		}
+		if (comm == "edit") {
+			cout << "Choose a field to edit: ";
+			// TODO: print field names
+			cin >> templine;
+			editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
+		}	
+		else if (comm == "loan")
+			editVideo(videos.at(matches.at(0)), persons, "location");
+		cout << "Update sucessful." << endl; // FIXME: working?
+	}
+	else if (comm == "help search") {
+		cout << "Fields and format of entry while searching:" << endl;
+		cout << "name - Movie Title Case Sensative" << endl;
+		cout << "date - mm/dd/yy (leading zeros required)" << endl;
+		cout << "audience - G or PG or PG-13 or R" << endl;
+		cout << "location - ex. Bill's House or Garage" << endl;
+		cout << "director - ex. Jackson or Peter Jackson" << endl;
+		cout << "actor - ex. Cruise or Tom Cruise" << endl;
+		cout << "runtime minutes - 135 or 60" << endl;
+	}
+	else if (comm == "print") { // print videos
+		display(videos, persons, directors, actors); // FIXME: working?
+	}
+	else if (comm == "quit") {
+		break; // quit program
+	}
+	else if (comm == "remove") {
+		cout << "Enter something to remove: ";
+		getline(cin, searchEntry);
+		matches = searchVideos(videos, searchEntry);
+		if (matches.size() != 0) { // if items were matched, then do the following
+			remove(videos, matches);
+			cout << "Items removed." << endl;
+		}
+	}
+	else if (comm == "save") {
+		// TODO: save list updates
+	}
+	else if (comm == "search") { // search vectors for entries
+		cout << "Enter something to search: ";
+		getline(cin, searchEntry);
+		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
+	}
+	else
+		cout << "Input not recognized.\n";
+	} while (comm != "quit"); // end loop
+	// continue to allow input until user enters 'q' (quit)
    
    #ifdef _WIN32
       system("pause");
