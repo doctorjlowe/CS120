@@ -417,6 +417,10 @@ int main(){
             templine.erase(stringPos, stringPos + director_stop.length()); }
 
          words = split(templine, ' ', nameVec);
+         /* note that one hazard of this method is that last names including 
+         'del' or 'van' will be split with the first part being counted as
+         a middle name.  This will be a problem if such a person does have
+         a last name. */
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
