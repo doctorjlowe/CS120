@@ -9,9 +9,10 @@ Date:             2015 May 13
 We hereby certify that this program is entirely our own work.
 *****************************************************************/
 
-#include <algorithm> // std::copy
+#include <cstdlib>	// std::atoi
 #include <fstream> // std::ifstream, std::ofstream
 #include <iostream> // std::cout
+#include <cstdlib>	// std::atoi
 #include <string> // std::string
 #include <vector>
 
@@ -524,9 +525,9 @@ int main(){
          if (stringPos < std::string::npos) {
             templine.erase(stringPos, stringPos + released_stop.length()); }
          words = split(templine, ' ', nameVec);
-         dateVec.at(0) = atoi(nameVec.at(0));
-         dateVec.at(1) = atoi(nameVec.at(1));
-         dateVec.at(2) = atoi(nameVec.at(2));
+         dateVec.at(0) = atoi(nameVec.at(0).c_str());
+         dateVec.at(1) = atoi(nameVec.at(1).c_str());
+         dateVec.at(2) = atoi(nameVec.at(2).c_str());
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
          importVideo->setReleased(importDate);
      }   // while released
