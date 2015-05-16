@@ -44,14 +44,14 @@ namespace Vids
 			Video(string name, string audience, string location, Date released);
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object
-			bool searchTarget(string target) { return 0; } // used to search additonal fields in derived classes
-			string getRuntimeMinutes() const { return to_string(runtimeMinutes); } // returns in string, more utility this way
+			virtual bool searchTarget(string target) { return 0; } // should not be called at all
+			short getRuntimeMinutes() const { return to_string(runtimeMinutes); } // returns in string, more utility this way
 			string getName() const { return name; }
 			string getAudience() const { return audience; }
 			string getLocation() const { return location; }
 			Date getReleased() const { return released; }
 			Date getViewed() const { return viewed; }
-			void setRuntimeMinutes(unsigned int in)  { runtimeMinutes = in; } // returns in string, more utility this way
+			void setRuntimeMinutes(short in)  { runtimeMinutes = in; } // returns in string, more utility this way
 			void setName(string in)  { name = in; }
 			void setAudience(string in)  { audience = in; }
 			void setLocation(string in)  { location = in; }

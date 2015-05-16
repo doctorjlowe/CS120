@@ -12,9 +12,10 @@ We hereby certify that this program is entirely our own work.
 #ifndef TELEVISION_H
 #define TELEVISION_H
 
-#include "Video.h"
 #include <iostream>
 #include <iomanip>
+
+#include "Video.h"
 
 class Television : public Vids::Video {
 public:

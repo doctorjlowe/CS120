@@ -9,12 +9,12 @@ Date:             2015 May 13
 We hereby certify that this program is entirely our own work.
 *****************************************************************/
 
-#include "Movie.h"
-
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iomanip>
+
+#include "Movie.h"
 
 using namespace std;
 using namespace Vids;
@@ -48,14 +48,20 @@ void Movie::displayAll() {
 
 bool Movie::searchTarget(string target) {
 	string ser = to_string(seriesNum);
-	cout << "name: " << getName() << " target: " << target << endl;
-	if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
-		|| name.find(target) != string::npos // search name
+	size_t runMin = getRuntimeMinutes().find(target);
+	size_t nm = name.find(target);
+	size_t loc = location.find(target);
+	size_t rel = dateToString(released).find(target);
+	size_t view = dateToString(viewed).find(target);
+	size_t series = ser.find(target);
+
+	if (runMin != string::npos // search string of runtimeMinutes
+		|| nm != string::npos // search name
 		|| audience == target // if audience rating is equivalent
-		|| location.find(target) != string::npos // if it matches a location
-		|| dateToString(released).find(target) != string::npos // if it matches the released date
-		|| dateToString(viewed).find(target) != string::npos
-		|| ser.find(target)) { // if it matches the viewed date
+		|| loc != string::npos // if it matches a location
+		|| rel != string::npos // if it matches the released date
+		|| view != string::npos // view date
+		|| ser == target) { // series number
 		return true;
 	}
 	else

@@ -12,7 +12,6 @@ We hereby certify that this program is entirely our own work.
 #include <cstdlib>	// std::atoi
 #include <fstream> // std::ifstream, std::ofstream
 #include <iostream> // std::cout
-#include <cstdlib>	// std::atoi
 #include <string> // std::string
 #include <vector>
 
@@ -131,11 +130,11 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
 	int currDir;
 	int currAct;
-	cout << "Name\t\t\tAudience Runtime Director\tActor" << endl;
+	cout << "Name\t\t\tAudience Director\tActor" << endl;
 	for (int i = 0; i < videos.size(); ++i) {
 		videos.at(i)->display();
 		persons.at(directors.at(i).iPer).display(); // display the person in directors
-		persons.at(directors.at(i).iPer).display(); // display the person in actors
+		persons.at(actors.at(i).iPer).display(); // display the person in actors
 		cout << endl;
 	}
 }	// display
@@ -226,7 +225,7 @@ void remove(vector<Video*> &videos, vector<int> matches) {
 int searchPeople(vector<Person> &persons, Person target) {
    bool found = false;
    int i;
-   // cout << "Searching..." << endl;
+   cout << "Searching..." << endl;
    for (i = 0; i < persons.size(); ++i) {
       // checks every field
       if (persons.at(i).getFirstName() == target.getFirstName()) {
@@ -237,7 +236,6 @@ int searchPeople(vector<Person> &persons, Person target) {
             return i;
          }  // if last
       }  // if first
-      // note: deliberately only using two fields here now; more can be added if need be
       // else cout << persons.at(i).getFirstName() << ", " << target.getFirstName() << endl;
    }  // for
    // if no matches are found, print message
@@ -248,16 +246,15 @@ int searchPeople(vector<Person> &persons, Person target) {
    return i;
 }	// searchPeople
 
-vector<int> searchVideos(vector<Video*> &videos, string target) {	// print any found matches
+vector<int> searchVideos(const vector<Video*> &videos, string target) {	// print any found matches
    vector<int> returnVector; // remembers all indexes of matched search targets
    bool found = false;
    int i = 0;
-   cout << "Searching for ... " << target << endl;
+   cout << "Searching..." << endl;
    for (i = 0; i < videos.size(); ++i) {
       // checks every field
-      // cout << videos.at(i)->getName() << ' ' << endl;
-      if (videos.at(i)->searchTarget(target)) {
-         found = true;
+	  if (videos.at(i)->searchTarget(target)) {
+		  found = true;
          returnVector.push_back(i);
          videos.at(i)->displayAll(); // if target is found in any fields, print all information for index
       }  // if
@@ -293,19 +290,31 @@ int main(){
    string person_file_name = "Persons.dat";
    string video_file_name = "Videos.dat";
    string movie_start = "<movie>";
+   string tv_start = "<television>";
+   string computer_start = "<computer>";
    string name_start = "<name>";
    string audience_start = "<audience>";
    string location_start = "<location>";
    string director_start = "<director>";
    string actor_start = "<actor>";
    string released_start = "<released>";
+   string season_start = "<season>";
+   string episode_start = "<episode>";
+   string homepage_start = "<homepage>";
+   string source_start = "<source>";
    string movie_stop = "</movie>";
+   string tv_stop = "</television>";
+   string computer_stop = "</computer>";
    string name_stop = "</name>";
    string audience_stop = "</audience>";
    string location_stop = "</location>";
    string director_stop = "</director>";
    string actor_stop = "</actor>";
    string released_stop = "</released>";
+   string season_stop = "</season>";
+   string episode_stop = "</episode>";
+   string homepage_stop = "</homepage>";
+   string source_stop = "</source>";
    string templine;
    string tempName;
    string comm;
@@ -319,7 +328,7 @@ int main(){
    Video* importVideo = NULL;
    Link newLink;
    unsigned char words = 0;
-   vector<string> nameVec;
+   vector<string> nameVec (4);
    vector<unsigned char> dateVec(3);
    int tempPerson, tempVideo;
    
@@ -385,6 +394,18 @@ int main(){
          importKind = MOVIE;
          importVideo = new Movie;
       }  // while movie start
+
+	  while ((templine.find(tv_start)) < std::string::npos) {
+		  templine.erase(0, tv_start.length());
+		  importKind = TELEVISION;
+		  importVideo = new Television;
+	  }  // while television start
+
+	  while ((templine.find(computer_start)) < std::string::npos) {
+		  templine.erase(0, computer_start.length());
+		  importKind = COMPUTER;
+		  importVideo = new Computer;
+	  }  // while computer start
       
       while ((templine.find(name_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
@@ -412,6 +433,50 @@ int main(){
             templine.erase(stringPos, stringPos + location_stop.length()); }
          importVideo->setLocation(templine);
       }  // while location
+
+	  while ((templine.find(season_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, season_start.length());
+		  stringPos = templine.find(season_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + season_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Television))
+			  dynamic_cast<Television*>(importVideo)->setSeason(templine); // TODO: setEpisode not written
+	  }  // while season
+
+	  while ((templine.find(episode_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, episode_start.length());
+		  stringPos = templine.find(episode_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + episode_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Television))
+			  dynamic_cast<Television*>(importVideo)->setEpisode(templine); // TODO: setEpisode not written
+	  }  // while episode
+
+	  while ((templine.find(homepage_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, homepage_start.length());
+		  stringPos = templine.find(homepage_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + homepage_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Computer))
+			  dynamic_cast<Computer*>(importVideo)->setHomepage(templine);
+	  }  // while homepage
+
+	  while ((templine.find(source_start)) < std::string::npos) {
+		  if (templine[0] == '\t') templine.erase(0, 1);
+		  templine.erase(0, source_start.length());
+		  stringPos = templine.find(source_stop);
+		  if (stringPos < std::string::npos) {
+			  templine.erase(stringPos, stringPos + source_stop.length());
+		  }
+		  if (typeid(importVideo) == typeid(Computer))
+			  dynamic_cast<Computer*>(importVideo)->setSource(templine);
+	  }  // while source
       
       while ((templine.find(director_start)) < std::string::npos) {
          if (templine[0] == '\t') templine.erase(0, 1);
@@ -424,7 +489,8 @@ int main(){
          /* note that one hazard of this method is that last names including 
          'del' or 'van' will be split with the first part being counted as
          a middle name.  This will be a problem if such a person does have
-         a last name. */
+         a middle name. */
+		 cout << templine;
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
@@ -450,7 +516,7 @@ int main(){
                cout << "Lineage: " << nameVec.at(3) << endl;
                break;
             default:
-               cout << "director " << words << "is invalid for: " << templine << endl;
+               cout << words << "is invalid for: " << templine << endl;
                break;
          }  // switch
          nameVec.resize(0);
@@ -479,6 +545,8 @@ int main(){
            templine.erase(stringPos, stringPos + actor_stop.length()); }
 
          words = split(templine, ' ', nameVec);
+		 cout << importVideo->getName() << endl;
+		 cout << templine << endl;
          newPerson.setName(nameVec.at(0), 0);
          switch (words) {
             case 1:
@@ -504,7 +572,7 @@ int main(){
                cout << "Lineage: " << nameVec.at(3) << endl;
                break;
             default:
-               cout << "actor " << words << "is invalid for: " << templine << endl;
+               cout << words << "is invalid for: " << templine << endl;
                break;
          }  // switch
          nameVec.resize(0);
@@ -533,13 +601,17 @@ int main(){
          if (stringPos < std::string::npos) {
             templine.erase(stringPos, stringPos + released_stop.length()); }
          words = split(templine, ' ', nameVec);
+		// cout << "split\n";
          dateVec.at(0) = atoi(nameVec.at(0).c_str());
+	//	 cout << "datv1\n";
          dateVec.at(1) = atoi(nameVec.at(1).c_str());
+		// cout << "datev2\n";
          dateVec.at(2) = atoi(nameVec.at(2).c_str());
-         nameVec.resize(0);
-         words = 0;
+		 //cout << "datev3\n";
          Date importDate(dateVec.at(0), dateVec.at(1), dateVec.at(2));
+		 //cout << "import\n";
          importVideo->setReleased(importDate);
+		// cout << "import2\n";
      }   // while released
       
       while ((templine.find(movie_stop)) < std::string::npos) {
@@ -552,152 +624,178 @@ int main(){
             videos.push_back(importVideo);
          }  // else
       }  // while movie stop
+
+	  while ((templine.find(tv_stop)) < std::string::npos) {
+		  templine.erase(0, tv_stop.length());
+		  if (importKind != TELEVISION) {
+			  cout << "Wrong importKind" << endl;
+			  break;
+		  }  // if
+		  else {
+			  videos.push_back(importVideo);
+		  }  // else
+	  }  // while tv stop
+
+	  while ((templine.find(computer_stop)) < std::string::npos) {
+		  templine.erase(0, computer_stop.length());
+		  if (importKind != COMPUTER) {
+			  cout << "Wrong importKind" << endl;
+			  break;
+		  }  // if
+		  else {
+			  videos.push_back(importVideo);
+		  }  // else
+	  }  // while computer stop
      i++; // increment index store for actors and directors vectors
    }  // while !videoReader.eof()
    
    videoReader.close(); // close input file
 
-	do {
-		cout << endl;
-	cout << "Enter a command (help = command list): ";
-	getline(cin, comm); // choice of command
-	
-	if (comm == "help") { // help/display command list
-		cout << "COMMANDS:" << endl;
-		cout << "help search = gives format for search entries" << endl;
-		cout << "search = search document for a given entry" << endl;
-		cout << "description search = search Television episode descriptions" << endl;
-		cout << "add = add a new entry to list" << endl;
-		cout << "edit = edit an existing entry" << endl;
-		cout << "loan = edit the location of an entry" << endl;
-		cout << "remove = remove an item from the list" << endl;
-		cout << "people = display entire list of Persons" << endl;
-		cout << "print = print entire list of Videos" << endl;
-		cout << "actors = display actor link table" << endl;
-		cout << "directors = display director link table" << endl;
-		cout << "quit = quit program" << endl;
-		cout << "save = save changes to list of Videos to external file" << endl;
-	} // if help
-	else if (comm == "add") { // add new entry
-		addVideo(videos, persons);
-		cout << "Add sucessful." << endl;
-	}	// if add
-	else if (comm == "description search") {
-		cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
-		getline(cin, searchEntry);
-		for (i = 0; i < videos.size(); ++i) {
-			if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
-				if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
-					videos.at(i)->displayAll();
-			}	// if typeid
-		} // for
-		// TODO: else, print error message
-	}
-	else if (comm == "edit" || comm == "loan") {
-		cout << "Enter something to search (be specific): ";
-		getline(cin, searchEntry);
-		matches = searchVideos(videos, searchEntry);
-		if (matches.size() == 0) {
-			cout << "No match found, try again." << endl;
-			continue; // return to top since no matches found
-		}
-		cout << "Do you want to change this (y/n)? " << endl;
-		videos.at(matches.at(0))->displayAll();
-		cout << endl;
-		cin >> templine;
-		if (templine == "n")
-			continue;
-		else if (templine == "y") {
-			// do nothing
-		} // if y
-		else {
-			cout << "not a valid choice" << endl;
-			continue;
-		} // else
-		if (comm == "edit") {
-			cout << "Now choose a field to edit -" << endl;
-			cout << "Name, Audience, Location, release date, viewed date, runtime minutes." << endl;
-			cout << "Choose a field to edit: ";
-			cin >> templine;
-			editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
-		}	// if edit	
-		else if (comm == "loan")
-			editVideo(videos.at(matches.at(0)), persons, "location");
-		cout << "Update sucessful." << endl; // FIXME: working?
-	} // if edit || loan
-	else if (comm == "help search") {
-		cout << "Fields and format of entry while searching:" << endl;
-		cout << "name - Movie Title Case Sensative" << endl;
-		cout << "date - mm/dd/yy (leading zeros required)" << endl;
-		cout << "audience - G or PG or PG-13 or R" << endl;
-		cout << "location - ex. Bill's House or Garage" << endl;
-		cout << "director - ex. Jackson or Peter Jackson" << endl;
-		cout << "actor - ex. Cruise or Tom Cruise" << endl;
-		cout << "runtime minutes - 135 or 60" << endl;
-	}	// if help search
-   else if (comm == "people") { // print persons
-      for (i = 0; i < persons.size(); ++i) {
-      	cout << persons.at(i).getFirstName() << ' ' << persons.at(i).getLastName() << endl;
-      }	// for
-   }	// people
-	else if (comm == "print") { // print videos
-		display(videos, persons, directors, actors);
-	}	// if print
-	else if (comm == "actors") { // print link table
-      for (i = 0; i < actors.size(); ++i) {
-      	tempVideo = actors.at(i).iMov;
-      	tempPerson = actors.at(i).iPer;
-      	cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
-      } // for
-	}	// if actors
-	else if (comm == "directors") { // print link table
-      for (i = 0; i < directors.size(); ++i) {
-      	tempVideo = directors.at(i).iMov;
-      	tempPerson = directors.at(i).iPer;
-      	cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
-      } // for
-	}	// if directors
-	else if (comm == "quit") {
-		break; // quit program
-	}	// if quit
-	else if (comm == "remove") {
-		cout << "Enter something to remove: ";
-		getline(cin, searchEntry);
-		matches = searchVideos(videos, searchEntry);
-		if (matches.size() != 0) { // if items were matched, then do the following
-			remove(videos, matches);
-			cout << "Items removed." << endl;
-		}	// if matches
-	} // if remove
-	else if (comm == "save") {
-		ofstream out;
-		out.open("Videos.dat");
-		if (!out.is_open()) {
-			cout << "Unable to find file to save to." << endl;
-			continue; // TODO: WORKING? should stop save process
-		}
-		// FIXME: I expect it will delete the leading comments without proper precautions
-		for (i = 0; i < videos.size(); ++i) {
-			out << movie_start << endl;
-			out << "\t" << name_start << videos.at(i)->getName() << name_stop << endl;
-			out << "\t" << audience_start << videos.at(i)->getAudience() << audience_stop << endl;
-			out << "\t" << location_start << videos.at(i)->getLocation() << location_stop << endl;
-			out << "\t" << director_start << persons.at(i) << director_stop << endl; // TODO: change operator<< maybe?
-			// TODO: fit mulitple people
-			out << "\t" << actor_start << persons.at(directors.at(i).iPer) << actor_stop << endl;
-			out << "\t" << released_start << videos.at(i)->getReleased() << released_stop << endl;
-			out << movie_stop << endl;
-		}
-		out.close();
-	} // if save
-	else if (comm == "search") { // search vectors for entries
-		cout << "Enter something to search: ";
-		getline(cin, searchEntry);
-		searchVideos(videos, searchEntry); // search videos vector for the searchEntry
-	}	// if search
-	else
-		cout << "Input not recognized.\n";
-	} while (comm != "quit"); // end loop
+   do {
+	   cout << endl;
+	   cout << "Enter a command (help = command list): ";
+	   getline(cin, comm); // choice of command
+
+	   if (comm == "help") { // help/display command list
+		   cout << "COMMANDS:" << endl;
+		   cout << "help search = gives format for search entries" << endl;
+		   cout << "search = search document for a given entry" << endl;
+		   cout << "description search = search Television episode descriptions" << endl;
+		   cout << "add = add a new entry to list" << endl;
+		   cout << "edit = edit an existing entry" << endl;
+		   cout << "loan = edit the location of an entry" << endl;
+		   cout << "remove = remove an item from the list" << endl;
+		   cout << "people = display entire list of Persons" << endl;
+		   cout << "print = print entire list of Videos" << endl;
+		   cout << "actors = display actor link table" << endl;
+		   cout << "directors = display director link table" << endl;
+		   cout << "quit = quit program" << endl;
+		   cout << "save = save changes to list of Videos to external file" << endl;
+	   } // if help
+	   else if (comm == "add") { // add new entry
+		   addVideo(videos, persons);
+		   cout << "Add sucessful." << endl;
+	   }	// if add
+	   else if (comm == "description search") {
+		   cout << "Enter something to search all episode descriptions (for TV shows):" << endl;
+		   getline(cin, searchEntry);
+		   for (i = 0; i < videos.size(); ++i) {
+			   if (typeid(videos.at(i)) == typeid(Television)) { // FIXME: does this work?
+				   if (dynamic_cast<Television*>(videos.at(i))->searchDesc(searchEntry))
+					   videos.at(i)->displayAll();
+			   }	// if typeid
+		   } // for
+		   // TODO: else, print error message
+	   }
+	   else if (comm == "edit" || comm == "loan") {
+		   cout << "Enter something to search (be specific): ";
+		   getline(cin, searchEntry);
+		   matches = searchVideos(videos, searchEntry);
+		   if (matches.size() == 0) {
+			   cout << "No match found, try again." << endl;
+			   continue; // return to top since no matches found
+		   }
+		   cout << "Do you want to change this (y/n)? " << endl;
+		   videos.at(matches.at(0))->displayAll();
+		   cout << endl;
+		   cin >> templine;
+		   if (templine == "n")
+			   continue;
+		   else if (templine == "y") {
+			   // do nothing
+		   } // if y
+		   else {
+			   cout << "not a valid choice" << endl;
+			   continue;
+		   } // else
+		   if (comm == "edit") {
+			   cout << "Now choose a field to edit -" << endl;
+			   cout << "Name, Audience, Location, release date, viewed date, runtime minutes." << endl;
+			   cout << "Choose a field to edit: ";
+			   cin >> templine;
+			   editVideo(videos.at(matches.at(0)), persons, templine); // call function to edit matched index
+		   }	// if edit	
+		   else if (comm == "loan")
+			   editVideo(videos.at(matches.at(0)), persons, "location");
+		   cout << "Update sucessful." << endl; // FIXME: working?
+	   } // if edit || loan
+	   else if (comm == "help search") {
+		   cout << "Fields and format of entry while searching:" << endl;
+		   cout << "name - Movie Title Case Sensative" << endl;
+		   cout << "date - mm/dd/yy (leading zeros required)" << endl;
+		   cout << "audience - G or PG or PG-13 or R" << endl;
+		   cout << "location - ex. Bill's House or Garage" << endl;
+		   cout << "director - ex. Jackson or Peter Jackson" << endl;
+		   cout << "actor - ex. Cruise or Tom Cruise" << endl;
+		   cout << "runtime minutes - 135 or 60" << endl;
+	   }	// if help search
+	   else if (comm == "people") { // print persons
+		   for (i = 0; i < persons.size(); ++i) {
+			   cout << persons.at(i).getFirstName() << endl;
+		   }	// for
+	   }	// people
+	   else if (comm == "print") { // print videos
+		   display(videos, persons, directors, actors);
+	   }	// if print
+	   else if (comm == "actors") { // print link table
+		   for (i = 0; i < actors.size(); ++i) {
+			   tempVideo = actors.at(i).iMov;
+			   tempPerson = actors.at(i).iPer;
+			   cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
+		   } // for
+	   }	// if actors
+	   else if (comm == "directors") { // print link table
+		   for (i = 0; i < directors.size(); ++i) {
+			   tempVideo = directors.at(i).iMov;
+			   tempPerson = directors.at(i).iPer;
+			   cout << videos.at(tempVideo)->getName() << ", " << persons.at(tempPerson).getLastName() << endl;
+		   } // for
+	   }	// if directors
+	   else if (comm == "quit") {
+		   break; // quit program
+	   }	// if quit
+	   else if (comm == "remove") {
+		   cout << "Enter something to remove: ";
+		   getline(cin, searchEntry);
+		   matches = searchVideos(videos, searchEntry);
+		   if (matches.size() != 0) { // if items were matched, then do the following
+			   cout << "Do you want to remove all of these results (y/n)? ";
+			   cin >> templine;
+			   if (templine == "y") {
+				   remove(videos, matches);
+				   cout << "Items removed." << endl;
+			   }
+		   }	// if matches
+	   } // if remove
+	   else if (comm == "save") { // NOT USABLE YET
+		   ofstream out;
+		   out.open("Videos.dat");
+		   if (!out.is_open()) {
+			   cout << "Unable to find file to save to." << endl;
+			   continue; // TODO: WORKING? should stop save process
+		   }
+		   // FIXME: I expect it will delete the leading comments without proper precautions
+		   for (i = 0; i < videos.size(); ++i) {
+			   out << movie_start << endl;
+			   out << "\t" << name_start << videos.at(i)->getName() << name_stop << endl;
+			   out << "\t" << audience_start << videos.at(i)->getAudience() << audience_stop << endl;
+			   out << "\t" << location_start << videos.at(i)->getLocation() << location_stop << endl;
+			   out << "\t" << director_start << persons.at(i) << director_stop << endl; // TODO: change operator<< maybe?
+			   // TODO: fit mulitple people
+			   out << "\t" << actor_start << persons.at(directors.at(i).iPer) << actor_stop << endl;
+			   out << "\t" << released_start << videos.at(i)->getReleased() << released_stop << endl;
+			   out << movie_stop << endl;
+		   }
+		   out.close();
+	   } // if save
+	   else if (comm == "search") { // search vectors for entries
+		   cout << "Enter something to search: ";
+		   getline(cin, searchEntry);
+		   searchVideos(videos, searchEntry); // search videos vector for the searchEntry
+	   }	// if search
+	   else
+		   cout << "Input not recognized.\n";
+   } while (comm != "quit"); // end loop
 	// continue to allow input until user enters "quit"
    
    #ifdef _WIN32

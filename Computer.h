@@ -12,11 +12,12 @@ We hereby certify that this program is entirely our own work.
 #ifndef COMPUTER_H
 #define COMPUTER_H
 
-#include "Video.h"
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iomanip>
+
+#include "Video.h"
 
 class Computer : public Vids::Video {
 public:

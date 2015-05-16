@@ -12,25 +12,29 @@ We hereby certify that this program is entirely our own work.
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include "Video.h"
-
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iomanip>
 
+#include "Video.h"
+
 class Movie : public Vids::Video {
 public:
 
 	Movie();
-	Movie(unsigned int series);
+	Movie(string series, unsigned int series);
 	void display(); 
 	void displayAll();
 
 	bool searchTarget(string target);
+	string getSeries() { return series; }
+	unsigned char getSeriesNum() { return seriesNum; }
+	void setSeries(string s) { series = s; }
 	void setSeriesNum(unsigned int sn) { seriesNum = sn; }
 private:
-	unsigned int seriesNum;
+	string series;
+	unsigned char seriesNum;
 };
 
 #endif

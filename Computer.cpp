@@ -9,11 +9,11 @@ Date:             2015 May 13
 We hereby certify that this program is entirely our own work.
 *****************************************************************/
 
-#include "Computer.h"
-
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "Computer.h"
 
 using namespace std;
 using namespace Vids;

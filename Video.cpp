@@ -9,9 +9,10 @@ Date:             2015 May 13
 We hereby certify that this program is entirely our own work.
 *****************************************************************/
 
-#include "Video.h"
 #include <string>
 #include <vector>
+
+#include "Video.h"
 
 using namespace std;
 
