@@ -23,8 +23,9 @@ Movie::Movie() {
 	seriesNum = 0;
 }
 
-Movie::Movie(unsigned int series) {
-	seriesNum = series;
+Movie::Movie(string ser, unsigned int sN) {
+	series = ser;
+	seriesNum = sN;
 }
 
 void Movie::display() { // order: name, audience, 1st director, 1st actor, runtime
