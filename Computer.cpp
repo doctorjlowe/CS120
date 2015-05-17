@@ -44,8 +44,7 @@ void Computer::displayAll() {
 }	// displayAll()
 
 bool Computer::searchTarget(string target) {
-	if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
-		|| name.find(target) != string::npos // search name
+	if (name.find(target) != string::npos // search name
 		|| audience == target // if audience rating is equivalent
 		|| location.find(target) != string::npos // if it matches a location
 		|| dateToString(released).find(target) != string::npos // if it matches the released date
