@@ -373,3 +373,32 @@ tabs are there for human readability, the parser will ignore them
 	<actor>Ilan Mitchell-Smith</actor>
 	<actor>Kelly LeBrock</actor>
 </movie>
+<television>
+	<name>Code Geass</name>
+	<audience>PG-13</audience>
+	<location>DVD</location>
+	<director>Goro Taniguchi</director>
+	<actor>Johnny Yong Bosch</actor>
+	<actor>Yuri Yowenthal</actor>
+	<released>2006 October 5</released>
+</television>
+<television>
+	<name>Adventure Time</name>
+	<audience>PG</audience>
+	<location>DVD</location>
+	<director>Hayden Walsh</director>
+	<actor>Jeremy Shada</actor>
+	<actor>John DiMaggio</actor>
+	<released>2010 April 5</released>
+	<season>6</season>
+	<episode>13</episode>
+</television>
+<computer>
+	<name>Bravest Warriors</name>
+	<audience>PG</audience>
+	<director>Hayden Walsh</director>
+	<actor>Catbug</actor>
+	<released>2012 November 8</released>
+	<source>youtube.com</source>
+</computer>
+	

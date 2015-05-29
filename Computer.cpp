@@ -18,6 +18,11 @@ We hereby certify that this program is entirely our own work.
 using namespace std;
 using namespace Vids;
 
+Computer::Computer() {
+	homepage = "";
+	source = "";
+}
+
 Computer::Computer(string homepage, string source) {
 	this->homepage = homepage;
 	this->source = source;
@@ -28,7 +33,6 @@ void Computer::display() { // order: name, audience, 1st director, 1st actor, ru
 		cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
 	}
 	cout << left << fixed << setw(6) << audience;
-	cout << left << fixed << setw(4) << runtimeMinutes;
 
 }// displays information for all objects of Video type
 

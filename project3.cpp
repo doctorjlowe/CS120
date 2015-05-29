@@ -125,6 +125,7 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
 	   // TODO: link entry to existing actor
    // TODO: alphabetize vector entry?
    videos.push_back(newAddVid); // if not, use this
+   delete newAddVid;
 } // End addVideo
 
 void display(vector<Video*> &videos, vector<Person> &persons, vector<Link> &directors, vector<Link> &actors) { // displays all objects in vector
@@ -499,7 +500,7 @@ int main(){
                newPerson.setName(nameVec.at(1), 1);
                cout << "Last: " << nameVec.at(1) << endl;
                break;
-            case 3:
+			case 3:
             /* note that there is no simple way to detect a person with 
             lineage but no middle name. */
                newPerson.setName(nameVec.at(1), 2);
@@ -622,6 +623,7 @@ int main(){
          }  // if
          else {
             videos.push_back(importVideo);
+            delete importVideo;
          }  // else
       }  // while movie stop
 
@@ -632,7 +634,8 @@ int main(){
 			  break;
 		  }  // if
 		  else {
-			  videos.push_back(importVideo);
+			  	videos.push_back(importVideo);
+            delete importVideo;
 		  }  // else
 	  }  // while tv stop
 
@@ -643,7 +646,8 @@ int main(){
 			  break;
 		  }  // if
 		  else {
-			  videos.push_back(importVideo);
+			  	videos.push_back(importVideo);
+            delete importVideo;
 		  }  // else
 	  }  // while computer stop
      i++; // increment index store for actors and directors vectors
@@ -797,6 +801,7 @@ int main(){
 		   cout << "Input not recognized.\n";
    } while (comm != "quit"); // end loop
 	// continue to allow input until user enters "quit"
+	delete newLink;
    
    #ifdef _WIN32
       system("pause");

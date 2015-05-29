@@ -30,12 +30,8 @@ Movie::Movie(string ser, unsigned int sN) {
 
 void Movie::display() { // order: name, audience, 1st director, 1st actor, runtime
 	string shortName = name;
-	// TODO: actors and directors abreviation
 	cout << left << fixed << setw(28) << Truncate(shortName, 24); // Truncate in Video class
 	cout << left << fixed << setw(6) << audience;
-	// cout << left << fixed << setw(21) << Truncate(shortDirector, 17);
-	// cout << left << fixed << setw(12) << Truncate(shortActors, 12);
-	cout << left << fixed << setw(4) << runtimeMinutes;
 }// displays information for all objects of Video type
 
 void Movie::displayAll() {

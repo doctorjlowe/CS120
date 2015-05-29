@@ -23,6 +23,8 @@ public:
 	Television(unsigned int season, unsigned int episode);
 	unsigned int getSeason() const { return season; }
 	unsigned int getEpisode() const { return episode; }
+	void setSeason(string s);
+	void setEpisode(string e);
 	bool searchTarget(string target); // used to search data members
 	// prints description of specific episode; must pass in index of season and episode
 	bool searchDesc(string target); // searches descriptions of episodes
