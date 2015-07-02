@@ -53,8 +53,7 @@ void Television::displayAll() {
 bool Television::searchTarget(string target) {
 	string seas = to_string(season); // turns season into string
 	string ep = to_string(episode); // turns episode into string
-	if (getRuntimeMinutes().find(target) != string::npos // search string of runtimeMinutes
-		|| name.find(target) != string::npos // search name
+	if (name.find(target) != string::npos // search name
 		|| audience == target // if audience rating is equivalent
 		|| location.find(target) != string::npos // if it matches a location
 		|| dateToString(released).find(target) != string::npos // if it matches the released date

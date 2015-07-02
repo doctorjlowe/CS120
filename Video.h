@@ -45,7 +45,7 @@ namespace Vids
 			virtual void display() = 0; // displays information for all objects of Video type
 			virtual void displayAll() = 0; // displays all information for one object
 			virtual bool searchTarget(string target) { return 0; } // should not be called at all
-			short getRuntimeMinutes() const { return to_string(runtimeMinutes); } // returns in string, more utility this way
+			short getRuntimeMinutes() const { return (runtimeMinutes); }
 			string getName() const { return name; }
 			string getAudience() const { return audience; }
 			string getLocation() const { return location; }

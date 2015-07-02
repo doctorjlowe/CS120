@@ -23,7 +23,7 @@ class Movie : public Vids::Video {
 public:
 
 	Movie();
-	Movie(string series, unsigned int series);
+	Movie(string s, unsigned int sN);
 	void display(); 
 	void displayAll();
 

@@ -45,15 +45,13 @@ void Movie::displayAll() {
 
 bool Movie::searchTarget(string target) {
 	string ser = to_string(seriesNum);
-	size_t runMin = getRuntimeMinutes().find(target);
 	size_t nm = name.find(target);
 	size_t loc = location.find(target);
 	size_t rel = dateToString(released).find(target);
 	size_t view = dateToString(viewed).find(target);
 	size_t series = ser.find(target);
 
-	if (runMin != string::npos // search string of runtimeMinutes
-		|| nm != string::npos // search name
+	if (nm != string::npos // search name
 		|| audience == target // if audience rating is equivalent
 		|| loc != string::npos // if it matches a location
 		|| rel != string::npos // if it matches the released date
