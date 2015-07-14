@@ -42,13 +42,34 @@ void addVideo(vector<Video*> &videos, vector<Person> &people) {
    unsigned int tempInt = 0;
    unsigned int tempInt2 = 0;
    unsigned int tempInt3 = 0;
+   char choice = 'n';
+   bool badInput = false;
 
    cout << "Which type to add?(Movie, Television, Computer) ";
    cin >> templine;
    if (templine == "Movie") {
-	  cout << "Which installment in a series is it? ";
-	  cin >> tempInt; // TODO: stop crash from non-number entry
-      newAddVid = new Movie(tempInt);
+   	cout << "Is this movie part of a series? [y/N] ";
+   	choice = tolower( getchar() );
+   	if(choice == 'n'){  // not series
+      	newAddVid = new Movie();
+   		}	// if 'n'
+   	else {	// series
+   		cout << "Give the name of the series: ";
+   		cin >> templine;
+	  		cout << "Which installment in a series is it? ";
+	  		cin >> tempInt;
+            do{	// verify input
+					badInput = false;
+					if(!cin){
+						badInput = true;
+						cin.clear();
+						cin.ignore();
+						cout << endl << "Please enter a number: ";
+						cin >> tempInt;
+					}	// if !cin
+            } while(badInput);
+      	newAddVid = new Movie(templine, tempInt);
+      } // else 'y'
    }	// if Movie
    else if (templine == "Television") { // season, episode, episodeDesc
       cout << "How many seasons are in it? ";
