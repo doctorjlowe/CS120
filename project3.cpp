@@ -822,7 +822,6 @@ int main(){
 		   cout << "Input not recognized.\n";
    } while (comm != "quit"); // end loop
 	// continue to allow input until user enters "quit"
-	delete newLink;
    
    #ifdef _WIN32
       system("pause");
