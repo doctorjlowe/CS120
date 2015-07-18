@@ -21,7 +21,7 @@ using namespace Vids;
 Television::Television() {
 	season = 0;
 	episode = 0;
-	episodeDesc;
+	episodeDesc = std::vector<std::string>();
 }	// default constructor
 
 Television::Television(unsigned int season, unsigned int episode) {
